@@ -24,6 +24,14 @@ For users on n8n v0.187+, you can install this node directly from the n8n Commun
 ### Manual Installation
 You can also install this node manually:
 
+1. Navigate to your n8n installation directory
+2. Run the following command:
+```bash
+npm install n8n-nodes-pdfco
+```
+3. Restart your n8n server
+
+
 ## Operations
 
 This node provides comprehensive PDF processing capabilities through PDF.co's API. Here are the available features:
