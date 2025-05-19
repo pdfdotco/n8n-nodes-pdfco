@@ -136,8 +136,13 @@ For detailed examples and workflow templates, visit our [documentation](https://
 ## Version history
 
 ### 1.0.0
-- Initial release
-- Support for all PDF.co API operations
-- Comprehensive PDF processing capabilities
+- Initial release with comprehensive PDF processing capabilities
+- Full integration with PDF.co API services
+- Support for all core PDF operations including conversion, merging, and modification
 
+### 1.0.1
+- Enhanced documentation with improved installation and usage instructions
 
+### 1.0.2
+- Improved code stability and performance
+- Enhanced error handling and response management

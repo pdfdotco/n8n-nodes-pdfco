@@ -9,11 +9,6 @@ import type {
 } from 'n8n-workflow';
 import { NodeApiError } from 'n8n-workflow';
 
-declare global {
-	// Minimal declaration for setTimeout.
-	function setTimeout(callback: (...args: any[]) => void, ms: number, ...args: any[]): number;
-}
-
 const sleep = (ms: number): Promise<void> => {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 };
@@ -100,6 +95,10 @@ export async function pdfcoApiRequestWithJobCheck(
 	} while (jobCheckResp.status === 'working');
 
 	if (jobCheckResp.status === 'success') {
+		// Preserve the name parameter from the initial response if it exists
+		if (mainRequestResp.name) {
+			jobCheckResp.name = mainRequestResp.name;
+		}
 		return cleanUpResponse(jobCheckResp);
 	} else {
 		throw new NodeApiError(this.getNode(), jobCheckResp as JsonObject);
