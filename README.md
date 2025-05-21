@@ -146,3 +146,6 @@ For detailed examples and workflow templates, visit our [documentation](https://
 ### 1.0.2
 - Improved code stability and performance
 - Enhanced error handling and response management
+
+### 1.0.3
+- Improved code stability and performance

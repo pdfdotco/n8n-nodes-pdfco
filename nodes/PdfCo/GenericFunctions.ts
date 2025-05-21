@@ -9,9 +9,12 @@ import type {
 } from 'n8n-workflow';
 import { NodeApiError } from 'n8n-workflow';
 
-const sleep = (ms: number): Promise<void> => {
-	return new Promise((resolve) => setTimeout(resolve, ms));
-};
+async function delay(
+	this: IHookFunctions | IExecuteFunctions | ILoadOptionsFunctions,
+	ms: number
+): Promise<void> {
+	await pdfcoApiRequest.call(this, '/v1/delay', {}, 'GET', { val: ms });
+}
 
 export async function pdfcoApiRequest(
 	this: IHookFunctions | IExecuteFunctions | ILoadOptionsFunctions,
@@ -28,7 +31,7 @@ export async function pdfcoApiRequest(
 		headers: {
 			'content-type': 'application/json',
 			'x-api-key': credentials.apiKey,
-			'user-agent': 'n8n/1.0.0',
+			'user-agent': 'n8n/1.0.3',
 		},
 		method,
 		qs,
@@ -90,8 +93,9 @@ export async function pdfcoApiRequestWithJobCheck(
 			break;
 		}
 
-		// Delay for 3 seconds
-		await sleep(3000);
+		if (jobCheckResp.status === 'working') {
+			await delay.call(this, 3000);
+		}
 	} while (jobCheckResp.status === 'working');
 
 	if (jobCheckResp.status === 'success') {
