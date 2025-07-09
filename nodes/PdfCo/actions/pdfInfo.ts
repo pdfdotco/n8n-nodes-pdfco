@@ -8,13 +8,14 @@ import {
 
 export const description: INodeProperties[] = [
 	{
-		displayName: 'Url',
+		displayName: 'PDF URL',
 		name: 'url',
 		type: 'string',
 		required: true,
 		default: '',
 		placeholder: 'https://example.com/invoice.pdf',
 		description: 'The URL of the PDF file to get information about',
+		hint: `Source file URL of the PDF file to get information about`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.PDFInfo],
@@ -52,6 +53,7 @@ export const description: INodeProperties[] = [
 				default: '',
 				placeholder: 'https://example.com/callback',
 				description: 'The callback URL or Webhook used to receive the output data',
+				hint: `The callback URL or Webhook used to receive the output data`,
 			},
 			{
 				displayName: 'Output Links Expiration (In Minutes)',
@@ -68,7 +70,8 @@ export const description: INodeProperties[] = [
 					password: true,
 				},
 				default: '',
-				description: 'The password of the PDF file',
+				description: 'The password of the password-protected PDF file',
+				hint: `The password of the password-protected PDF file`,
 			},
 			{
 				displayName: 'HTTP Username',
@@ -76,6 +79,7 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				description: 'The HTTP username if required to access source URL',
+				hint: `The HTTP username if required to access source URL`,
 			},
 			{
 				displayName: 'HTTP Password',
@@ -86,6 +90,7 @@ export const description: INodeProperties[] = [
 				},
 				default: '',
 				description: 'The HTTP password if required to access source URL',
+				hint: `The HTTP password if required to access source URL`,
 			},
 			{
 				displayName: 'Custom Profiles',
@@ -93,7 +98,8 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				placeholder: `{ 'outputDataFormat': 'base64' }`,
-				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://developer.pdf.co/api/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://docs.pdf.co/api-reference/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+				hint: `Use "JSON" to adjust custom properties. Review <a href="https://docs.pdf.co/api-reference/profiles">Profiles documentation</a> to set extra options for API calls and may be specific to certain APIs.`,
 			},
 		],
 	},

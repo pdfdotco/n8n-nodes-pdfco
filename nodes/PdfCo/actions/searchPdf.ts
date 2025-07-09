@@ -15,6 +15,7 @@ export const description: INodeProperties[] = [
 		default: '',
 		placeholder: 'https://example.com/document.pdf',
 		description: 'The URL of the PDF file to search',
+		hint: 'Source file URL of the PDF file to search',
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.SearchPdf],
@@ -27,8 +28,9 @@ export const description: INodeProperties[] = [
 		type: 'string',
 		required: true,
 		default: '',
-		description: 'Specify the text you wish to search for within the PDF document',
+		description: 'Specify the text you wish to search for within the PDF document (e.g. company name)',
 		placeholder: 'e.g.: company name',
+		hint: 'Specify the text you wish to search for within the PDF document (e.g. company name)',
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.SearchPdf],
@@ -52,7 +54,8 @@ export const description: INodeProperties[] = [
 		name: 'pages',
 		type: 'string',
 		default: '',
-		description: 'Comma-separated list of page numbers to search in. Leave empty to search all pages.',
+		description: 'Default: `0` (first page). Use ranges like `0,1-2,5,7-` (7- = from page 7 to end). Negative numbers count from end: `-2` = second-to-last page.',
+		hint: 'Default: `0` (first page). Use ranges like `0,1-2,5,7-` (7- = from page 7 to end). Negative numbers count from end: `-2` = second-to-last page.',
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.SearchPdf],
@@ -76,7 +79,8 @@ export const description: INodeProperties[] = [
 				name: 'name',
 				type: 'string',
 				default: '',
-				description: 'The name of the output file',
+				description: 'Custom name for the output file. If empty, uses default file name.',
+				hint: 'Custom name for the output file. If empty, uses default file name.',
 			},
 			{
 				displayName: 'Webhook URL',
@@ -85,21 +89,23 @@ export const description: INodeProperties[] = [
 				default: '',
 				placeholder: 'https://example.com/callback',
 				description: 'The callback URL or Webhook used to receive the output data',
+				hint: `The callback URL or Webhook used to receive the output data`,
 			},
 			{
 				displayName: 'Output Links Expiration (In Minutes)',
 				name: 'expiration',
 				type: 'number',
 				default: 60,
-				description: 'The expiration time of the output link',
+				description: 'The expiration time of the output link in minutes',
 			},
-			{
-				displayName: 'Inline',
-				name: 'inline',
-				type: 'boolean',
-				default: true,
-				description: 'Whether to return the output in the response',
-			},
+			// {
+			// 	displayName: 'Inline',
+			// 	name: 'inline',
+			// 	type: 'boolean',
+			// 	default: true,
+			// 	description: 'Whether to return the output in the response',
+			// 	hint: `Whether to return the output in the response`,
+			// },
 			{
 				displayName: 'Word Matching Mode',
 				name: 'wordMatchingMode',
@@ -119,6 +125,7 @@ export const description: INodeProperties[] = [
 						value: 'None',
 					},
 				],
+				hint: 'Default: `SmartMatch`. Use `ExactMatch` to match the exact word. Use `None` to disable word matching.',
 			},
 			{
 				displayName: 'Password',
@@ -129,6 +136,7 @@ export const description: INodeProperties[] = [
 				},
 				default: '',
 				description: 'The password of the PDF file',
+				hint: 'The password of the password-protected PDF file',
 			},
 			{
 				displayName: 'HTTP Username',
@@ -136,7 +144,8 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				description: 'The HTTP username if required to access source URL',
-			},
+				hint: `The HTTP username if required to access source URL`,
+				},
 			{
 				displayName: 'HTTP Password',
 				name: 'httppassword',
@@ -146,6 +155,7 @@ export const description: INodeProperties[] = [
 				},
 				default: '',
 				description: 'The HTTP password if required to access source URL',
+				hint: `The HTTP password if required to access source URL`,
 			},
 			{
 				displayName: 'Custom Profiles',
@@ -153,7 +163,8 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				placeholder: `{ 'outputDataFormat': 'base64' }`,
-				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://developer.pdf.co/api/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://docs.pdf.co/api-reference/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+				hint: `Use "JSON" to adjust custom properties. Review <a href="https://docs.pdf.co/api-reference/profiles">Profiles documentation</a> to set extra options for API calls and may be specific to certain APIs.`,
 			},
 		],
 	},
@@ -199,8 +210,8 @@ export async function execute(this: IExecuteFunctions, index: number) {
 	const password = advancedOptions?.password as string | undefined;
 	if (password) body.password = password;
 
-	const inline = advancedOptions?.inline as boolean | undefined;
-	if (inline !== undefined) body.inline = inline;
+	// const inline = advancedOptions?.inline as boolean | undefined;
+	// if (inline !== undefined) body.inline = inline;
 
 	const profiles = advancedOptions?.profiles as string | undefined;
 	if (profiles) body.profiles = profiles;

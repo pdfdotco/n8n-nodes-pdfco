@@ -4,14 +4,14 @@ import { pdfcoApiRequestWithJobCheck, sanitizeProfiles, ActionConstants } from '
 
 export const description: INodeProperties[] = [
 	{
-		displayName: 'Input Link(s)',
+		displayName: 'File URL(s) to Merge',
 		name: 'url',
 		type: 'string',
 		required: true,
 		default: [],
 		placeholder: 'https://example.com/invoice.pdf',
 		description: 'The URLs of the PDF files to merge',
-		//hint: `Enter URLs as a comma-separated list or in separate fields. Enable Auto-Convert for non-PDF files. `,
+		hint: `Enter one or more direct file URLs. Separate multiple links with commas or use multiple fields.`,
 		typeOptions: {
 			multipleValues: true,
 			multipleValueButtonText: 'Add URL', // Button text to add more fields
@@ -28,6 +28,7 @@ export const description: INodeProperties[] = [
 		type: 'boolean',
 		default: false,
 		description: 'Whether to auto-convert DOC, DOCX, XLS, JPG, PNG, MSG, EML files to PDF before merging',
+		hint: `Whether to auto-convert DOC, DOCX, XLS, JPG, PNG, MSG, EML files to PDF before merging`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.MergePdf],
@@ -51,8 +52,8 @@ export const description: INodeProperties[] = [
 				name: 'name',
 				type: 'string',
 				default: '',
-				description: 'The name of the output file',
-				//hint: `Enter the name of the output file. If not specified, the original file name is used.`,
+				description: 'Custom name for the output file. If empty, uses default file name.',
+				hint: 'Custom name for the output file. If empty, uses default file name.',
 			},
 			{
 				displayName: 'Webhook URL',
@@ -61,6 +62,7 @@ export const description: INodeProperties[] = [
 				default: '',
 				placeholder: 'https://example.com/callback',
 				description: 'The callback URL or Webhook used to receive the output data',
+				hint: `The callback URL or Webhook used to receive the output data`,
 			},
 			{
 				displayName: 'Output Links Expiration (In Minutes)',
@@ -75,6 +77,7 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				description: 'The HTTP username if required to access source URL',
+				hint: `The HTTP username if required to access source URL`,
 			},
 			{
 				displayName: 'HTTP Password',
@@ -85,6 +88,7 @@ export const description: INodeProperties[] = [
 				},
 				default: '',
 				description: 'The HTTP password if required to access source URL',
+				hint: `The HTTP password if required to access source URL`,
 			},
 			{
 				displayName: 'Custom Profiles',
@@ -92,7 +96,8 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				placeholder: `{ 'outputDataFormat': 'base64' }`,
-				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://developer.pdf.co/api/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://docs.pdf.co/api-reference/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+				hint: `Use "JSON" to adjust custom properties. Review <a href="https://docs.pdf.co/api-reference/profiles">Profiles documentation</a> to set extra options for API calls and may be specific to certain APIs.`,
 			},
 		],
 	}

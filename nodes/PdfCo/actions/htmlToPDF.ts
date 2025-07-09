@@ -33,13 +33,14 @@ export const description: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Url',
+		displayName: 'Web Page URL',
 		name: 'url',
 		type: 'string',
 		required: true,
 		default: '',
 		placeholder: 'https://google.com',
 		description: 'The URL of the page to convert to PDF',
+		hint: `Enter the full web page URL (e.g., https://google.com) you want to convert to PDF.`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.UrlHtmlToPDF],
@@ -58,6 +59,7 @@ export const description: INodeProperties[] = [
 		default: '',
 		placeholder: '<h1>Hello World</h1>',
 		description: 'The HTML code to convert to PDF',
+		hint: `Enter the HTML code to convert to PDF eg. &lt;h1&gt;Hello World&lt;/h1&gt;`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.UrlHtmlToPDF],
@@ -73,6 +75,7 @@ export const description: INodeProperties[] = [
 		default: '',
 		placeholder: '1',
 		description: 'The ID of the HTML template to use',
+		hint: `Enter the ID of the HTML template you created in PDF.co. This ID is used to generate the PDF layout. You can view your <a href="https://app.pdf.co/html-templates-tool/manager">HTML templates</a> here.`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.UrlHtmlToPDF],
@@ -91,6 +94,7 @@ export const description: INodeProperties[] = [
 		default: '',
 		placeholder: '',
 		description: 'The data to use for the HTML template',
+		hint: 'Provide the data to inject into the template. <br/>Use JSON (e.g. , {"invoice_id":"12345","total":"$999"}) or CSV (e.g. `invoice_id, total\\r\\n12345,$999`). <br/>Make sure keys match the template fields. You can view your <a href="https://app.pdf.co/templates/html">HTML templates here</a>.',
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.UrlHtmlToPDF],
@@ -115,7 +119,8 @@ export const description: INodeProperties[] = [
 				name: 'name',
 				type: 'string',
 				default: '',
-				description: 'The name of the output file',
+				description: 'Enter a custom file name (optional). Uses a default name if left empty.',
+				hint: 'Enter a custom file name (optional). Uses a default name if left empty.',
 			},
 			{
 				displayName: 'Orientation',
@@ -145,12 +150,12 @@ export const description: INodeProperties[] = [
 					{ name: 'A4', value: 'a4' },
 					{ name: 'A5', value: 'a5' },
 					{ name: 'A6', value: 'a6' },
-					{ name: 'Custom', value: 'custom' },
 					{ name: 'Legal', value: 'legal' },
 					{ name: 'Letter', value: 'letter' },
 					{ name: 'Tabloid', value: 'tabloid' },
 				],
 				default: 'letter',
+				hint: `Use Custom Paper Size to set your own dimensions. Do not use both Paper Size and Custom Paper Size together.`
 			},
 			{
 				displayName: 'Custom Paper Size',
@@ -158,7 +163,7 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				description: 'The custom paper size of the PDF',
 				default: '',
-				placeholder: '`200 300`, `200px 300px`, `200mm 300mm`, `20cm 30cm` or `6in 8in`',
+				hint: `Enter the custom size (e.g., 200px 300px or 20in 30in). Supported units: px, mm, cm, in.`,
 			},
 			{
 				displayName: 'Render Page Background',
@@ -178,9 +183,9 @@ export const description: INodeProperties[] = [
 				displayName: 'Margins',
 				name: 'margins',
 				type: 'string',
-				placeholder: '`10px`, `5mm`, `5in`, `5px 5px 5px 5px`',
 				default: '',
 				description: 'The margins of the PDF',
+				hint: `Set custom margins (e.g., 10px or 5mm 10mm 5mm 10mm). Format: {top} {right} {bottom} {left}. Units: px, mm, cm, or in.`,
 			},
 			{
 				displayName: 'Media Type',
@@ -192,6 +197,7 @@ export const description: INodeProperties[] = [
 					{ name: 'None', value: 'none' },
 				],
 				default: 'print',
+				hint: `Controls which CSS styles are used. print for clean layout, screen to match website, none for default rendering.`
 			},
 			{
 				displayName: 'Header',
@@ -203,6 +209,7 @@ export const description: INodeProperties[] = [
 				default: '',
 				description: 'The header of the PDF',
 				placeholder: '<h1>Header</h1>',
+				hint: 'The header HTML code of the PDF (e.g. &lt;h1&gt;Header&lt;/h1&gt;)',
 			},
 			{
 				displayName: 'Footer',
@@ -214,6 +221,7 @@ export const description: INodeProperties[] = [
 				default: '',
 				description: 'The footer of the PDF',
 				placeholder: '<h1>Footer</h1>',
+				hint: 'The footer HTML code of the PDF (e.g. &lt;h1&gt;Footer&lt;/h1&gt;)',
 			},
 			{
 				displayName: 'Webhook URL',
@@ -222,6 +230,7 @@ export const description: INodeProperties[] = [
 				default: '',
 				placeholder: 'https://example.com/callback',
 				description: 'The callback URL or Webhook used to receive the output data',
+				hint: `The callback URL or Webhook used to receive the output data`,
 			},
 			{
 				displayName: 'Output Links Expiration (In Minutes)',
@@ -237,7 +246,8 @@ export const description: INodeProperties[] = [
 				default: '',
 				placeholder: `{ 'outputDataFormat': 'base64' }`,
 				description:
-					'Use "JSON" to adjust custom properties. Review Profiles at https://developer.pdf.co/api/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+					'Use "JSON" to adjust custom properties. Review Profiles at https://docs.pdf.co/api-reference/pdf-from-html/convert to set extra options for API calls and may be specific to certain APIs.',
+				hint: `Use "JSON" to adjust custom properties. Review <a href="https://docs.pdf.co/api-reference/pdf-from-html/convert">Profiles documentation</a> to set extra options for API calls and may be specific to certain APIs.`,
 			},
 		],
 	},

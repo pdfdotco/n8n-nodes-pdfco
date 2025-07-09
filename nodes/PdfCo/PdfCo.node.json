@@ -8,12 +8,12 @@
 	"resources": {
 		"credentialDocumentation": [
 			{
-				"url": "https://developer.pdf.co/api/introduction/index.html"
+				"url": "https://docs.pdf.co/api-reference"
 			}
 		],
 		"primaryDocumentation": [
 			{
-				"url": "https://developer.pdf.co/api/index.html"
+				"url": "https://docs.pdf.co/api-reference"
 			}
 		]
 	}

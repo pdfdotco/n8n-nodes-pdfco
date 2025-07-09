@@ -15,6 +15,7 @@ export const description: INodeProperties[] = [
 		default: '',
 		placeholder: 'https://example.com/document.pdf',
 		description: 'The URL of the PDF file to make searchable or unsearchable',
+		hint: `Source file URL of the PDF file to make searchable or unsearchable`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.MakePdfSearchable],
@@ -76,15 +77,17 @@ export const description: INodeProperties[] = [
 				name: 'name',
 				type: 'string',
 				default: '',
-				description: 'The name of the output file',
+				description: 'Custom name for the output file. If empty, uses default file name.',
+				hint: 'Custom name for the output file. If empty, uses default file name.',
 			},
 			{
 				displayName: 'Pages',
 				name: 'pages',
 				type: 'string',
-				description: 'Page numbers (e.g., 0,1-2,5,7-)',
+				description: 'Default: `0` (first page). Use ranges like `0,1-2,5,7-` (7- = from page 7 to end). Negative numbers count from end: `-2` = second-to-last page.',
 				default: '',
 				placeholder: '0',
+				hint: 'Default: `0` (first page). Use ranges like `0,1-2,5,7-` (7- = from page 7 to end). Negative numbers count from end: `-2` = second-to-last page.',
 			},
 			{
 				displayName: 'Webhook URL',
@@ -93,6 +96,7 @@ export const description: INodeProperties[] = [
 				default: '',
 				placeholder: 'https://example.com/callback',
 				description: 'The callback URL or Webhook used to receive the output data',
+				hint: `The callback URL or Webhook used to receive the output data`,
 			},
 			{
 				displayName: 'Output Links Expiration (In Minutes)',
@@ -109,7 +113,8 @@ export const description: INodeProperties[] = [
 					password: true,
 				},
 				default: '',
-				description: 'The password of the PDF file',
+				description: 'The password of the password-protected PDF file',
+				hint: `The password of the password-protected PDF file`,
 			},
 			{
 				displayName: 'HTTP Username',
@@ -117,6 +122,7 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				description: 'The HTTP username if required to access source URL',
+				hint: `The HTTP username if required to access source URL`,
 			},
 			{
 				displayName: 'HTTP Password',
@@ -127,6 +133,7 @@ export const description: INodeProperties[] = [
 				},
 				default: '',
 				description: 'The HTTP password if required to access source URL',
+				hint: `The HTTP password if required to access source URL`,
 			},
 			{
 				displayName: 'Custom Profiles',
@@ -134,7 +141,8 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				placeholder: `{ 'outputDataFormat': 'base64' }`,
-				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://developer.pdf.co/api/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://docs.pdf.co/api-reference/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+				hint: `Use "JSON" to adjust custom properties. Review <a href="https://docs.pdf.co/api-reference/profiles">Profiles documentation</a> to set extra options for API calls and may be specific to certain APIs.`,
 			},
 		],
 	},

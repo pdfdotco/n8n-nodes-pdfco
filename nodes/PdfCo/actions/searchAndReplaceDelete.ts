@@ -14,6 +14,7 @@ export const description: INodeProperties[] = [
 		required: true,
 		default: '',
 		description: 'The URL of the PDF file to search and replace text in',
+		hint: 'Source file URL of the PDF file to search and replace text in',
 		placeholder: 'https://example.com/document.pdf',
 		displayOptions: {
 			show: {
@@ -70,6 +71,7 @@ export const description: INodeProperties[] = [
 						default: '',
 						description: 'Text to search for in the PDF',
 						placeholder: 'e.g.: company name',
+						hint: `Text to search for in the PDF (e.g. company name)`,
 					},
 				],
 			},
@@ -103,6 +105,7 @@ export const description: INodeProperties[] = [
 						default: '',
 						description: 'Text to search for in the PDF',
 						placeholder: 'e.g.: old company name',
+						hint: `Text to search for in the PDF (e.g. old company name)`,
 					},
 					{
 						displayName: 'Replacement Text',
@@ -112,6 +115,7 @@ export const description: INodeProperties[] = [
 						default: '',
 						description: 'Text to replace the found text with',
 						placeholder: 'e.g.: new company name',
+						hint: `Text to replace the found text with (e.g. new company name)`,
 					},
 				],
 			},
@@ -131,6 +135,7 @@ export const description: INodeProperties[] = [
 		default: '',
 		description: 'Text to search for in the PDF',
 		placeholder: 'e.g.: company name',
+		hint: `Text to search for in the PDF (e.g. company name)`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.SearchAndReplaceDelete],
@@ -146,6 +151,7 @@ export const description: INodeProperties[] = [
 		default: '',
 		description: 'URL of the image to replace the found text with',
 		placeholder: 'e.g.: https://example.com/image.png',
+		hint: `URL of the image to replace the found text with (e.g. https://example.com/image.png)`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.SearchAndReplaceDelete],
@@ -159,7 +165,8 @@ export const description: INodeProperties[] = [
 		type: 'string',
 		default: '',
 		description:
-			'Comma-separated list of page numbers to search in. Leave empty to search all pages.',
+			'Default: `0` (first page). Use ranges like `0,1-2,5,7-` (7- = from page 7 to end). Negative numbers count from end: `-2` = second-to-last page.',
+		hint: 'Default: `0` (first page). Use ranges like `0,1-2,5,7-` (7- = from page 7 to end). Negative numbers count from end: `-2` = second-to-last page.',
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.SearchAndReplaceDelete],
@@ -184,6 +191,7 @@ export const description: INodeProperties[] = [
 				type: 'number',
 				default: 0,
 				description: 'Limit the number of replacements per search term (0 for unlimited)',
+				hint: `Limit the number of replacements per search term (0 for unlimited)`,
 			},
 			{
 				displayName: 'Use Regular Expressions',
@@ -204,7 +212,8 @@ export const description: INodeProperties[] = [
 				name: 'name',
 				type: 'string',
 				default: '',
-				description: 'The name of the output file',
+				description: 'Custom name for the output file. If empty, uses default file name.',
+				hint: 'Custom name for the output file. If empty, uses default file name.',
 			},
 			{
 				displayName: 'Webhook URL',
@@ -213,6 +222,7 @@ export const description: INodeProperties[] = [
 				default: '',
 				placeholder: 'https://example.com/callback',
 				description: 'The callback URL or Webhook used to receive the output data',
+				hint: `The callback URL or Webhook used to receive the output data`,
 			},
 			{
 				displayName: 'Output Links Expiration (In Minutes)',
@@ -220,7 +230,7 @@ export const description: INodeProperties[] = [
 				type: 'number',
 				default: 60,
 				description: 'The expiration time of the output link',
-			},
+				},
 			{
 				displayName: 'Password',
 				name: 'password',
@@ -229,7 +239,8 @@ export const description: INodeProperties[] = [
 					password: true,
 				},
 				default: '',
-				description: 'The password of the PDF file',
+				description: 'The password of the password-protected PDF file',
+				hint: 'The password of the password-protected PDF file',
 			},
 			{
 				displayName: 'HTTP Username',
@@ -237,6 +248,7 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				description: 'The HTTP username if required to access source URL',
+				hint: `The HTTP username if required to access source URL`,
 			},
 			{
 				displayName: 'HTTP Password',
@@ -247,6 +259,7 @@ export const description: INodeProperties[] = [
 				},
 				default: '',
 				description: 'The HTTP password if required to access source URL',
+				hint: `The HTTP password if required to access source URL`,
 			},
 			{
 				displayName: 'Custom Profiles',
@@ -254,7 +267,8 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				placeholder: `{ 'outputDataFormat': 'base64' }`,
-				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://developer.pdf.co/api/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://docs.pdf.co/api-reference/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+				hint: `Use "JSON" to adjust custom properties. Review <a href="https://docs.pdf.co/api-reference/profiles">Profiles documentation</a> to set extra options for API calls and may be specific to certain APIs.`,
 			},
 		],
 	},

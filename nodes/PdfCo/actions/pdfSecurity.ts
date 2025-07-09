@@ -8,13 +8,14 @@ import {
 
 export const description: INodeProperties[] = [
 	{
-		displayName: 'Url',
+		displayName: 'PDF URL',
 		name: 'url',
 		type: 'string',
 		required: true,
 		default: '',
 		placeholder: 'https://example.com/invoice.pdf',
 		description: 'The URL of the PDF file to add security to or remove security from',
+		hint: `Source file URL of the PDF file to add security to or remove security from`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.PDFSecurity],
@@ -49,7 +50,8 @@ export const description: INodeProperties[] = [
 		typeOptions: {
 			password: true,
 		},
-		description: 'The password for the owner',
+		description: 'The main owner password that is used for document encryption and for setting/removing restrictions',
+		hint: 'The main owner password that is used for document encryption and for setting/removing restrictions',
 		default: '',
 		displayOptions: {
 			show: {
@@ -65,7 +67,8 @@ export const description: INodeProperties[] = [
 		typeOptions: {
 			password: true,
 		},
-		description: 'The password for the user',
+		description: 'The optional user password will be asked for viewing and printing document',
+		hint: 'The optional user password will be asked for viewing and printing document',
 		default: '',
 		displayOptions: {
 			show: {
@@ -132,6 +135,7 @@ export const description: INodeProperties[] = [
 				displayName: 'Allow Accessibility Support',
 				name: 'allowAccessibilitySupport',
 				description: 'Whether to allow accessibility support',
+				hint: 'Allow content extraction for accessibility. Applies only if a User password is set',
 				type: 'boolean',
 				default: true,
 			},
@@ -139,6 +143,7 @@ export const description: INodeProperties[] = [
 				displayName: 'Allow Document Assembly',
 				name: 'allowAssemblyDocument',
 				description: 'Whether to allow document assembly',
+				hint: 'Allow document assembly. Applies only if a User password is set',
 				type: 'boolean',
 				default: true,
 			},
@@ -146,6 +151,7 @@ export const description: INodeProperties[] = [
 				displayName: 'Allow Printing',
 				name: 'allowPrintDocument',
 				description: 'Whether to allow printing',
+				hint: 'Allow printing. Applies only if a User password is set',
 				type: 'boolean',
 				default: true,
 			},
@@ -153,6 +159,7 @@ export const description: INodeProperties[] = [
 				displayName: 'Allow Form Filling',
 				name: 'allowFillForms',
 				description: 'Whether to allow form filling',
+				hint: 'Allow form filling. Applies only if a User password is set',
 				type: 'boolean',
 				default: true,
 			},
@@ -160,6 +167,7 @@ export const description: INodeProperties[] = [
 				displayName: 'Allow Document Modification',
 				name: 'allowModifyDocument',
 				description: 'Whether to allow document modification',
+				hint: 'Allow document modification. Applies only if a User password is set',
 				type: 'boolean',
 				default: true,
 			},
@@ -167,6 +175,7 @@ export const description: INodeProperties[] = [
 				displayName: 'Allow Content Extraction',
 				name: 'allowContentExtraction',
 				description: 'Whether to allow content extraction',
+				hint: 'Allow content extraction. Applies only if a User password is set',
 				type: 'boolean',
 				default: true,
 			},
@@ -174,6 +183,7 @@ export const description: INodeProperties[] = [
 				displayName: 'Allow Annotation Modification',
 				name: 'allowModifyAnnotations',
 				description: 'Whether to allow annotation modification',
+				hint: 'Allow annotation modification. Applies only if a User password is set',
 				type: 'boolean',
 				default: true,
 			},
@@ -198,7 +208,8 @@ export const description: INodeProperties[] = [
 				name: 'name',
 				type: 'string',
 				default: '',
-				description: 'The name of the output file',
+				description: 'Custom name for the output file. If empty, uses default file name.',
+				hint: 'Custom name for the output file. If empty, uses default file name.',
 			},
 			{
 				displayName: 'Webhook URL',
@@ -207,6 +218,7 @@ export const description: INodeProperties[] = [
 				default: '',
 				placeholder: 'https://example.com/callback',
 				description: 'The callback URL or Webhook used to receive the output data',
+				hint: `The callback URL or Webhook used to receive the output data`,
 			},
 			{
 				displayName: 'Output Links Expiration (In Minutes)',
@@ -221,7 +233,8 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				placeholder: `{ 'outputDataFormat': 'base64' }`,
-				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://developer.pdf.co/api/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://docs.pdf.co/api-reference/profiles to set extra options for API calls and may be specific to certain APIs.',
+				hint: `Use "JSON" to adjust custom properties. Review <a href="https://docs.pdf.co/api-reference/profiles">Profiles documentation</a> to set extra options for API calls and may be specific to certain APIs.`,
 			},
 		],
 	},
@@ -243,6 +256,8 @@ export const description: INodeProperties[] = [
 				name: 'name',
 				type: 'string',
 				default: '',
+				description: 'Custom name for the output file. If empty, uses default file name.',
+				hint: 'Custom name for the output file. If empty, uses default file name.',
 			},
 			{
 				displayName: 'Webhook URL',
@@ -250,12 +265,15 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				placeholder: 'https://example.com/callback',
+				description: 'The callback URL or Webhook used to receive the output data',
+				hint: `The callback URL or Webhook used to receive the output data`,
 			},
 			{
 				displayName: 'Output Links Expiration (In Minutes)',
 				name: 'expiration',
 				type: 'number',
 				default: 60,
+				description: 'The expiration time of the output link',
 			},
 			{
 				displayName: 'Custom Profiles',
@@ -263,6 +281,8 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				placeholder: `{ 'outputDataFormat': 'base64' }`,
+				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://docs.pdf.co/api-reference/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+				hint: `Use "JSON" to adjust custom properties. Review <a href="https://docs.pdf.co/api-reference/profiles">Profiles documentation</a> to set extra options for API calls and may be specific to certain APIs.`,
 			},
 		],
 	},

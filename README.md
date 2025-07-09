@@ -125,12 +125,12 @@ This node allows you to automate PDF processing tasks in your n8n workflows. Her
 - Extract data from PDFs to other formats
 - Manage and modify PDF documents programmatically
 
-For detailed examples and workflow templates, visit our [documentation](https://developer.pdf.co).
+For detailed examples and workflow templates, visit our [documentation](https://docs.pdf.co).
 
 ## Resources
 
 * [n8n community nodes documentation](https://docs.n8n.io/integrations/community-nodes/)
-* [PDF.co API Documentation](https://developer.pdf.co)
+* [PDF.co API Documentation](https://docs.pdf.co)
 * [PDF.co Pricing](https://app.pdf.co/subscriptions)
 
 ## Version history
@@ -149,3 +149,7 @@ For detailed examples and workflow templates, visit our [documentation](https://
 
 ### 1.0.3
 - Improved code stability and performance
+
+### 1.0.4
+- AI Invoice Parser: Added support for custom field extraction, enabling more flexible and tailored data parsing. 
+- Added user-friendly descriptions for all PDF.co modules to help users better understand each feature's capabilities

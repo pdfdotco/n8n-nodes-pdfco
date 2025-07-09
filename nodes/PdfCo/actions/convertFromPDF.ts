@@ -8,13 +8,14 @@ import {
 
 export const description: INodeProperties[] = [
 	{
-		displayName: 'Url',
+		displayName: 'PDF URL',
 		name: 'url',
 		type: 'string',
 		required: true,
 		default: '',
 		placeholder: 'https://example.com/invoice.pdf',
 		description: 'The URL of the PDF file to convert',
+		hint: `Source file URL of the PDF file to convert`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.ConvertFromPDF],
@@ -39,16 +40,19 @@ export const description: INodeProperties[] = [
 				value: 'toJpg',
 			},
 			{
+				name: 'PDF to JSON (AI-Powered)',
+				value: 'toJsonMeta',
+				description: 'AI-powered PDF to JSON conversion with text styles and metadata detection'
+			},
+			/*{
 				name: 'PDF to JSON (Legacy)',
 				value: 'toJson',
-			},
+				description: 'Basic PDF to JSON conversion with OCR support'
+			},*/
 			{
-				name: 'PDF to JSON-Meta (Headers and Styles)',
-				value: 'toJsonMeta',
-			},
-			{
-				name: 'PDF to JSON2 (Text Objects and Structure)',
+				name: 'PDF to JSON (Simple)',
 				value: 'toJson2',
+				description: 'Converts PDF to JSON with basic text, table, and image extraction'
 			},
 			{
 				name: 'PDF to PNG',
@@ -118,7 +122,8 @@ export const description: INodeProperties[] = [
 				name: 'name',
 				type: 'string',
 				default: '',
-				description: 'The name of the output file',
+				description: 'Custom name for the output file. If empty, uses default file name.',
+				hint: 'Custom name for the output file. If empty, uses default file name.',
 			},
 			{
 				displayName: 'Pages',
@@ -126,21 +131,39 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				placeholder: '0',
-				description: 'The pages to convert',
+				hint: `Comma-separated list of page indices (or ranges) to process. Leave empty for all pages. First page is 0 (zero). Example: '0,1-2,5-'.`,
 			},
-			{
-				displayName: 'Inline',
-				name: 'inline',
-				type: 'boolean',
-				default: true,
-				description: 'Whether to return the output in the response',
-			},
+			// {
+			// 	displayName: 'Inline',
+			// 	name: 'inline',
+			// 	type: 'boolean',
+			// 	default: true,
+			// 	description: 'Whether to return the output in the response',
+			// 	hint: `Whether to return the output in the response`,
+			// },
 			{
 				displayName: 'Line Grouping',
 				name: 'lineGrouping',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to group lines into table cells',
+				type: 'options',
+				options: [
+					{
+						name: 'Group by Rows',
+						value: '1',
+						description: 'Groups rows by checking if cells can be merged with the next row'
+					},
+					{
+						name: 'Group by Columns',
+						value: '2',
+						description: 'Groups cells within the same column across rows'
+					},
+					{
+						name: 'Join Orphaned Rows',
+						value: '3',
+						description: 'Joins orphaned rows to previous rows when no separator exists'
+					},
+				],
+				default: '1',
+				hint: `Controls how lines of text are grouped within table cells when extracting data from a PDF.`,
 			},
 			{
 				displayName: 'Unwrap',
@@ -148,7 +171,8 @@ export const description: INodeProperties[] = [
 				type: 'boolean',
 				default: false,
 				description:
-					'Whether to unwrap lines into a single line within table cells when lineGrouping is enabled',
+					'Whether to unwrap lines into a single line within table cells when lineGrouping provided',
+				hint: `Whether to unwrap lines into a single line within table cells when lineGrouping provided`,
 			},
 			{
 				displayName: 'OCR Language Name or ID',
@@ -160,7 +184,7 @@ export const description: INodeProperties[] = [
 				default: '',
 				placeholder: 'English',
 				description:
-					'The language of the OCR for Scanned Documents. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>.',
+					'The language of the OCR for Scanned Documents. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>.'
 			},
 			{
 				displayName: 'Extraction Region',
@@ -169,6 +193,7 @@ export const description: INodeProperties[] = [
 				default: '',
 				placeholder: '51.8, 114.8, 235.5, 204.0',
 				description: 'The region of the document to extract',
+				hint: `Specify the region to extract in the format: 'x, y, width, height' (e.g. '51.8, 114.8, 235.5, 204.0'). Use <a href="https://app.pdf.co/pdf-edit-add-helper">PDF Inspector</a> to measure coordinates.`,
 			},
 			{
 				displayName: 'Webhook URL',
@@ -177,6 +202,7 @@ export const description: INodeProperties[] = [
 				default: '',
 				placeholder: 'https://example.com/callback',
 				description: 'The callback URL or Webhook used to receive the output data',
+				hint: `The callback URL or Webhook used to receive the output data`,
 			},
 			{
 				displayName: 'Output Links Expiration (In Minutes)',
@@ -191,6 +217,7 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				description: 'The HTTP username if required to access source URL',
+				hint: `The HTTP username if required to access source URL`,
 			},
 			{
 				displayName: 'HTTP Password',
@@ -201,6 +228,7 @@ export const description: INodeProperties[] = [
 				},
 				default: '',
 				description: 'The HTTP password if required to access source URL',
+				hint: `The HTTP password if required to access source URL`,
 			},
 			{
 				displayName: 'Custom Profiles',
@@ -209,7 +237,8 @@ export const description: INodeProperties[] = [
 				default: '',
 				placeholder: `{ 'outputDataFormat': 'base64' }`,
 				description:
-					'Use "JSON" to adjust custom properties. Review Profiles at https://developer.pdf.co/api/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+					'Use "JSON" to adjust custom properties. Review Profiles at https://docs.pdf.co/api-reference/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+				hint: `Use "JSON" to adjust custom properties. Review <a href="https://docs.pdf.co/api-reference/profiles">Profiles documentation</a> to set extra options for API calls and may be specific to certain APIs.`,
 			},
 		],
 	},
@@ -231,7 +260,8 @@ export const description: INodeProperties[] = [
 				name: 'name',
 				type: 'string',
 				default: '',
-				description: 'The name of the output file',
+				description: 'Custom name for the output file. If empty, uses default file name.',
+				hint: 'Custom name for the output file. If empty, uses default file name.',
 			},
 			{
 				displayName: 'Pages',
@@ -239,15 +269,16 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				placeholder: '0',
-				description: 'The pages to convert',
+				hint: `Comma-separated list of page indices (or ranges) to process. Leave empty for all pages. First page is 0 (zero). Example: '0,1-2,5-'.`,
 			},
-			{
-				displayName: 'Inline',
-				name: 'inline',
-				type: 'boolean',
-				default: true,
-				description: 'Whether to return the output in the response',
-			},
+			// {
+			// 	displayName: 'Inline',
+			// 	name: 'inline',
+			// 	type: 'boolean',
+			// 	default: true,
+			// 	description: 'Whether to return the output in the response',
+			// 	hint: `Whether to return the output in the response`,
+			// },
 			{
 				displayName: 'Extraction Region',
 				name: 'rect',
@@ -255,6 +286,7 @@ export const description: INodeProperties[] = [
 				default: '',
 				placeholder: '51.8, 114.8, 235.5, 204.0',
 				description: 'The region of the document to extract',
+				hint: `Specify the region to extract in the format: 'x, y, width, height' (e.g. '51.8, 114.8, 235.5, 204.0'). Use <a href="https://app.pdf.co/pdf-edit-add-helper">PDF Inspector</a> to measure coordinates.`,
 			},
 			{
 				displayName: 'Webhook URL',
@@ -263,6 +295,7 @@ export const description: INodeProperties[] = [
 				default: '',
 				placeholder: 'https://example.com/callback',
 				description: 'The callback URL or Webhook used to receive the output data',
+				hint: `The callback URL or Webhook used to receive the output data`,
 			},
 			{
 				displayName: 'Output Links Expiration (In Minutes)',
@@ -277,6 +310,7 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				description: 'The HTTP username if required to access source URL',
+				hint: `The HTTP username if required to access source URL`,
 			},
 			{
 				displayName: 'HTTP Password',
@@ -287,6 +321,7 @@ export const description: INodeProperties[] = [
 				},
 				default: '',
 				description: 'The HTTP password if required to access source URL',
+				hint: `The HTTP password if required to access source URL`,
 			},
 			{
 				displayName: 'Custom Profiles',
@@ -295,7 +330,8 @@ export const description: INodeProperties[] = [
 				default: '',
 				placeholder: `{ 'outputDataFormat': 'base64' }`,
 				description:
-					'Use "JSON" to adjust custom properties. Review Profiles at https://developer.pdf.co/api/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+					'Use "JSON" to adjust custom properties. Review Profiles at https://docs.pdf.co/api-reference/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+				hint: `Use "JSON" to adjust custom properties. Review <a href="https://docs.pdf.co/api-reference/profiles">Profiles documentation</a> to set extra options for API calls and may be specific to certain APIs.`,
 			},
 		],
 	},
@@ -317,7 +353,8 @@ export const description: INodeProperties[] = [
 				name: 'name',
 				type: 'string',
 				default: '',
-				description: 'The name of the output file',
+				description: 'Custom name for the output file. If empty, uses default file name.',
+				hint: 'Custom name for the output file. If empty, uses default file name.',
 			},
 			{
 				displayName: 'Pages',
@@ -325,15 +362,16 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				placeholder: '0',
-				description: 'The pages to convert',
+				hint: `Comma-separated list of page indices (or ranges) to process. Leave empty for all pages. First page is 0 (zero). Example: '0,1-2,5-'.`,
 			},
-			{
-				displayName: 'Inline',
-				name: 'inline',
-				type: 'boolean',
-				default: true,
-				description: 'Whether to return the output in the response',
-			},
+			// {
+			// 	displayName: 'Inline',
+			// 	name: 'inline',
+			// 	type: 'boolean',
+			// 	default: true,
+			// 	description: 'Whether to return the output in the response',
+			// 	hint: `Whether to return the output in the response`,
+			// },
 			{
 				displayName: 'Webhook URL',
 				name: 'callback',
@@ -341,6 +379,7 @@ export const description: INodeProperties[] = [
 				default: '',
 				placeholder: 'https://example.com/callback',
 				description: 'The callback URL or Webhook used to receive the output data',
+				hint: `The callback URL or Webhook used to receive the output data`,
 			},
 			{
 				displayName: 'Output Links Expiration (In Minutes)',
@@ -355,6 +394,7 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				description: 'The HTTP username if required to access source URL',
+				hint: `The HTTP username if required to access source URL`,
 			},
 			{
 				displayName: 'HTTP Password',
@@ -365,6 +405,7 @@ export const description: INodeProperties[] = [
 				},
 				default: '',
 				description: 'The HTTP password if required to access source URL',
+				hint: `The HTTP password if required to access source URL`,
 			},
 			{
 				displayName: 'Custom Profiles',
@@ -373,7 +414,8 @@ export const description: INodeProperties[] = [
 				default: '',
 				placeholder: `{ 'outputDataFormat': 'base64' }`,
 				description:
-					'Use "JSON" to adjust custom properties. Review Profiles at https://developer.pdf.co/api/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+					'Use "JSON" to adjust custom properties. Review Profiles at https://docs.pdf.co/api-reference/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+				hint: `Use "JSON" to adjust custom properties. Review <a href="https://docs.pdf.co/api-reference/profiles">Profiles documentation</a> to set extra options for API calls and may be specific to certain APIs.`,
 			},
 		],
 	},
@@ -444,8 +486,8 @@ export async function execute(this: IExecuteFunctions, index: number) {
 		const expiration = advancedOptions?.expiration as number | undefined;
 		if (expiration) body.expiration = expiration;
 
-		const inline = advancedOptions?.inline as boolean | undefined;
-		if (inline !== undefined) body.inline = inline;
+		// const inline = advancedOptions?.inline as boolean | undefined;
+		// if (inline !== undefined) body.inline = inline;
 
 		const httpusername = advancedOptions?.httpusername as string | undefined;
 		if (httpusername) body.httpusername = httpusername;
@@ -473,8 +515,8 @@ export async function execute(this: IExecuteFunctions, index: number) {
 		const expiration = advancedOptions?.expiration as number | undefined;
 		if (expiration) body.expiration = expiration;
 
-		const inline = advancedOptions?.inline as boolean | undefined;
-		if (inline !== undefined) body.inline = inline;
+		// const inline = advancedOptions?.inline as boolean | undefined;
+		// if (inline !== undefined) body.inline = inline;
 
 		const httpusername = advancedOptions?.httpusername as string | undefined;
 		if (httpusername) body.httpusername = httpusername;
@@ -505,12 +547,12 @@ export async function execute(this: IExecuteFunctions, index: number) {
 		const expiration = advancedOptions?.expiration as number | undefined;
 		if (expiration) body.expiration = expiration;
 
-		const inline = advancedOptions?.inline as boolean | undefined;
-		if (inline !== undefined) body.inline = inline;
+		// const inline = advancedOptions?.inline as boolean | undefined;
+		// if (inline !== undefined) body.inline = inline;
 
-		const lineGrouping = advancedOptions?.lineGrouping as boolean | undefined;
+		const lineGrouping = advancedOptions?.lineGrouping as string | undefined;
 		if (lineGrouping) {
-			body.lineGrouping = '1';
+			body.lineGrouping = lineGrouping;
 
 			const unwrap = advancedOptions?.unwrap as boolean | undefined;
 			if (unwrap !== undefined) body.unwrap = unwrap;

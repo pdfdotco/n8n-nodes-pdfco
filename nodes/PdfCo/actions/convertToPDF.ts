@@ -45,13 +45,13 @@ export const description: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Url',
+		displayName: 'Source File URL of the File to Convert',
 		name: 'url',
 		type: 'string',
 		required: true,
 		default: '',
 		description: 'The URL of the file to convert',
-		//placeholder: 'https://example.com/invoice.pdf',
+		hint: `Enter the direct URL of the file you want to convert. Make sure the link is publicly accessible.`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.ConvertToPDF],
@@ -64,6 +64,8 @@ export const description: INodeProperties[] = [
 		type: 'string',
 		default: '',
 		placeholder: '0',
+		description: 'The index of the worksheet to convert',
+		hint: `The index of the worksheet to convert`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.ConvertToPDF],
@@ -89,7 +91,8 @@ export const description: INodeProperties[] = [
 				name: 'name',
 				type: 'string',
 				default: '',
-				description: 'The name of the output file',
+				description: 'Custom name for the output file. If empty, uses default file name.',
+				hint: 'Custom name for the output file. If empty, uses default file name.',
 			},
 			{
 				displayName: 'Webhook URL',
@@ -98,6 +101,7 @@ export const description: INodeProperties[] = [
 				default: '',
 				placeholder: 'https://example.com/callback',
 				description: 'The callback URL or Webhook used to receive the output data',
+				hint: `The callback URL or Webhook used to receive the output data`,
 			},
 			{
 				displayName: 'Output Links Expiration (In Minutes)',
@@ -112,6 +116,7 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				description: 'The HTTP username if required to access source URL',
+				hint: `The HTTP username if required to access source URL`,
 			},
 			{
 				displayName: 'HTTP Password',
@@ -122,6 +127,7 @@ export const description: INodeProperties[] = [
 				},
 				default: '',
 				description: 'The HTTP password if required to access source URL',
+				hint: `The HTTP password if required to access source URL`,
 			},
 			{
 				displayName: 'Custom Profiles',
@@ -129,7 +135,8 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				placeholder: `{ 'outputDataFormat': 'base64' }`,
-				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://developer.pdf.co/api/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://docs.pdf.co/api-reference/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+				hint: `Use "JSON" to adjust custom properties. Review <a href="https://docs.pdf.co/api-reference/profiles">Profiles documentation</a> to set extra options for API calls and may be specific to certain APIs.`,
 			},
 		],
 	},
@@ -151,7 +158,8 @@ export const description: INodeProperties[] = [
 				name: 'name',
 				type: 'string',
 				default: '',
-				description: 'The name of the output file',
+				description: 'Custom name for the output file. If empty, uses default file name.',
+				hint: 'Custom name for the output file. If empty, uses default file name.',
 			},
 			{
 				displayName: 'Auto Size',
@@ -167,6 +175,7 @@ export const description: INodeProperties[] = [
 				default: '',
 				placeholder: 'https://example.com/callback',
 				description: 'The callback URL or Webhook used to receive the output data',
+				hint: `The callback URL or Webhook used to receive the output data`,
 			},
 			{
 				displayName: 'Output Links Expiration (In Minutes)',
@@ -174,6 +183,7 @@ export const description: INodeProperties[] = [
 				type: 'number',
 				default: 60,
 				description: 'The expiration time of the output link',
+				hint: `The expiration time of the output link`,
 			},
 			{
 				displayName: 'HTTP Username',
@@ -181,6 +191,7 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				description: 'The HTTP username if required to access source URL',
+				hint: `The HTTP username if required to access source URL`,
 			},
 			{
 				displayName: 'HTTP Password',
@@ -191,6 +202,7 @@ export const description: INodeProperties[] = [
 				},
 				default: '',
 				description: 'The HTTP password if required to access source URL',
+				hint: `The HTTP password if required to access source URL`,
 			},
 			{
 				displayName: 'Custom Profiles',
@@ -198,7 +210,8 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				placeholder: `{ 'outputDataFormat': 'base64' }`,
-				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://developer.pdf.co/api/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://docs.pdf.co/api-reference/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+				hint: `Use "JSON" to adjust custom properties. Review <a href="https://docs.pdf.co/api-reference/profiles">Profiles documentation</a> to set extra options for API calls and may be specific to certain APIs.`,
 			},
 		],
 	},
@@ -219,8 +232,9 @@ export const description: INodeProperties[] = [
 				displayName: 'File Name',
 				name: 'name',
 				type: 'string',
-				description: 'The name of the output file',
 				default: '',
+				description: 'Custom name for the output file. If empty, uses default file name.',
+				hint: 'Custom name for the output file. If empty, uses default file name.',
 			},
 			{
 				displayName: 'Embeds Attachments',
@@ -228,6 +242,7 @@ export const description: INodeProperties[] = [
 				type: 'boolean',
 				default: true,
 				description: 'Whether to embed attachments in the PDF',
+				hint: `Whether to embed attachments in the PDF`,
 			},
 			{
 				displayName: 'Convert Attachments to PDF',
@@ -235,6 +250,7 @@ export const description: INodeProperties[] = [
 				type: 'boolean',
 				default: true,
 				description: 'Whether to convert attachments to PDF',
+				hint: `Whether to convert attachments to PDF`,
 			},
 			{
 				displayName: 'Margins',
@@ -243,6 +259,7 @@ export const description: INodeProperties[] = [
 				placeholder: '`10px`, `5mm`, `5in`, `5px 5px 5px 5px`',
 				default: '',
 				description: 'The margins of the PDF',
+				hint: `The margins of the PDF (e.g. '10px', '5mm', '5in', '5px 5px 5px 5px')`,
 			},
 			{
 				displayName: 'Orientation',
@@ -273,12 +290,12 @@ export const description: INodeProperties[] = [
 					{ name: 'A4', value: 'a4' },
 					{ name: 'A5', value: 'a5' },
 					{ name: 'A6', value: 'a6' },
-					{ name: 'Custom', value: 'custom' },
 					{ name: 'Legal', value: 'legal' },
 					{ name: 'Letter', value: 'letter' },
 					{ name: 'Tabloid', value: 'tabloid' },
 				],
 				default: 'letter',
+				description: 'The paper size of the PDF',
 			},
 			{
 				displayName: 'Custom Paper Size',
@@ -287,6 +304,7 @@ export const description: INodeProperties[] = [
 				default: '',
 				description: 'The custom paper size of the PDF',
 				placeholder: '`200 300`, `200px 300px`, `200mm 300mm`, `20cm 30cm` or `6in 8in`',
+				hint: `The custom paper size of the PDF (e.g. '200 300', '200px 300px', '200mm 300mm', '20cm 30cm' or '6in 8in')`,
 			},
 			{
 				displayName: 'Webhook URL',
@@ -295,12 +313,14 @@ export const description: INodeProperties[] = [
 				default: '',
 				placeholder: 'https://example.com/callback',
 				description: 'The callback URL or Webhook used to receive the output data',
+				hint: `The callback URL or Webhook used to receive the output data`,
 			},
 			{
 				displayName: 'Output Links Expiration (In Minutes)',
 				name: 'expiration',
 				type: 'number',
 				default: 60,
+				description: 'The expiration time of the output link',
 			},
 			{
 				displayName: 'Custom Profiles',
@@ -308,7 +328,8 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				placeholder: `{ 'outputDataFormat': 'base64' }`,
-				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://developer.pdf.co/api/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://docs.pdf.co/api-reference/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+				hint: `Use "JSON" to adjust custom properties. Review <a href="https://docs.pdf.co/api-reference/profiles">Profiles documentation</a> to set extra options for API calls and may be specific to certain APIs.`,
 			},
 		],
 	}

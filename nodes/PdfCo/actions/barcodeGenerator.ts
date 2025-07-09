@@ -14,6 +14,7 @@ export const description: INodeProperties[] = [
 		required: true,
 		default: '',
 		description: 'Enter the value you want to encode into the barcode',
+		hint: `Enter the value you want to encode into the barcode`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.BarcodeGenerator],
@@ -26,6 +27,7 @@ export const description: INodeProperties[] = [
 		type: 'options',
 		default: 'QRCode',
 		description: 'Select the type of barcode to generate. By default, a QR Code will be generated.',
+		hint: `Select the type of barcode to generate. By default, a QR Code will be generated.`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.BarcodeGenerator],
@@ -260,6 +262,7 @@ export const description: INodeProperties[] = [
 		type: 'string',
 		default: '',
 		description: 'Set this to the image that you want to be inserted the logo inside the QR-Code barcode',
+		hint: `Set this to the image you want to embed as a logo inside the QR Code. Only PNG, JPG or JPEG image URLs are supported.`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.BarcodeGenerator],
@@ -285,6 +288,7 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				description: 'The name of the output file',
+				hint: `The name of the output file`,
 			},
 			{
 				displayName: 'Generate Inline URL',
@@ -298,8 +302,9 @@ export const description: INodeProperties[] = [
 				name: 'profiles',
 				type: 'string',
 				default: '',
-				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://developer.pdf.co/api/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://docs.pdf.co/api-reference/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
 				placeholder: `{ 'outputDataFormat': 'base64' }`,
+				hint: `Use "JSON" to adjust custom properties. Review <a href="https://docs.pdf.co/api-reference/profiles">Profiles documentation</a> to set extra options for API calls and may be specific to certain APIs.`,
 			},
 		],
 	},

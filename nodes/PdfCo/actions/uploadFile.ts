@@ -13,11 +13,13 @@ export const description: INodeProperties[] = [
 				name: 'Standard Upload',
 				value: 'presignedUrl',
 				description: 'Upload files directly (supports larger files up to 2GB)',
+				hint: `Upload files directly (supports larger files up to 2GB)`,
 			},
 			{
 				name: 'Base64',
 				value: 'base64',
 				description: 'Upload using base64 encoding (suitable for smaller files)',
+				hint: `Upload using base64 encoding (suitable for smaller files)`,
 			},
 		],
 		displayOptions: {
@@ -26,6 +28,7 @@ export const description: INodeProperties[] = [
 			},
 		},
 		description: 'The method to use for uploading the file',
+		hint: `The method to use for uploading the file`,
 	},
 	{
 		displayName: 'Binary File',
@@ -39,6 +42,7 @@ export const description: INodeProperties[] = [
 			},
 		},
 		description: 'Whether the data to upload should be taken from binary field',
+		hint: `Enable this if the file you want to upload is coming from a binary field in a previous node`,
 	},
 	{
 		displayName: 'File Content',
@@ -57,6 +61,7 @@ export const description: INodeProperties[] = [
 		},
 		placeholder: '',
 		description: 'The text content of the file to upload',
+		hint: `The text content of the file to be created and uploaded`,
 	},
 	{
 		displayName: 'Input Binary Field',
@@ -72,7 +77,7 @@ export const description: INodeProperties[] = [
 			},
 		},
 		placeholder: '',
-		hint: 'The name of the input binary field containing the file to be uploaded',
+		hint: 'Enter the name of the binary field that holds the file to be uploaded (e.g. data, attachment_0, etc).',
 	},
 	{
 		displayName: 'Base64 Content',
@@ -91,6 +96,7 @@ export const description: INodeProperties[] = [
 		},
 		placeholder: '',
 		description: 'The base64 encoded content of the file to upload',
+		hint: `The base64 encoded content of the file to upload`,
 	},
 	{
 		displayName: 'File Name',
@@ -104,6 +110,7 @@ export const description: INodeProperties[] = [
 				operation: [ActionConstants.UploadFile],
 			},
 		},
+		hint: `The name of the file to upload`,
 	},
 ];
 

@@ -15,6 +15,7 @@ export const description: INodeProperties[] = [
 		default: '',
 		placeholder: 'https://example.com/document.pdf',
 		description: 'The URL of the PDF / Image file to read',
+		hint: `The URL of the PDF / Image file to read`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.BarcodeReader],
@@ -27,6 +28,7 @@ export const description: INodeProperties[] = [
 		type: 'multiOptions',
 		default: ['QRCode'],
 		description: 'Choose the type of barcode to read. By default, the system will look for QR Codes.',
+		hint: `Choose the type of barcode to read. By default, the system will look for QR Codes.`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.BarcodeReader],
@@ -225,6 +227,7 @@ export const description: INodeProperties[] = [
 		type: 'string',
 		default: '',
 		description: 'Comma-separated list of page numbers to search in. Leave empty to search all pages.',
+		hint: `Comma-separated list of page indices (or ranges) to process. Leave empty for all pages. First page is 0 (zero). Example: '0,1-2,5-'.`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.BarcodeReader],
@@ -249,6 +252,7 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				description: 'The name of the output file',
+				hint: `The name of the output file`,
 			},
 			{
 				displayName: 'Optical Marks Reader',
@@ -257,6 +261,7 @@ export const description: INodeProperties[] = [
 				default: '',
 				placeholder: 'Checkbox,UnderlinedField',
 				description: 'Comma-separated list of additional marks to detect. The barcode reader engine can also find marks like Checkbox, UnderlinedField, etc. on scanned documents',
+				hint: `Comma-separated list of additional marks to detect. The barcode reader engine can also find marks like Checkbox, UnderlinedField, etc. on scanned documents`,
 			},
 			{
 				displayName: 'Webhook URL',
@@ -265,6 +270,7 @@ export const description: INodeProperties[] = [
 				default: '',
 				placeholder: 'https://example.com/callback',
 				description: 'The callback URL or Webhook used to receive the output data',
+				hint: `The callback URL or Webhook used to receive the output data`,
 			},
 			{
 				displayName: 'Output Links Expiration (In Minutes)',
@@ -279,6 +285,7 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				description: 'The HTTP username if required to access source URL',
+				hint: `The HTTP username if required to access source URL`,
 			},
 			{
 				displayName: 'HTTP Password',
@@ -289,6 +296,7 @@ export const description: INodeProperties[] = [
 				},
 				default: '',
 				description: 'The HTTP password if required to access source URL',
+				hint: `The HTTP password if required to access source URL`,
 			},
 			{
 				displayName: 'Custom Profiles',
@@ -296,7 +304,8 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				placeholder: `{ 'outputDataFormat': 'base64' }`,
-				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://developer.pdf.co/api/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://docs.pdf.co/api-reference/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+				hint: `Use "JSON" to adjust custom properties. Review <a href="https://docs.pdf.co/api-reference/profiles">Profiles documentation</a> to set extra options for API calls and may be specific to certain APIs.`,
 			},
 		],
 	},

@@ -8,13 +8,14 @@ import {
 
 export const description: INodeProperties[] = [
 	{
-		displayName: 'Url',
+		displayName: 'PDF URL',
 		name: 'url',
 		type: 'string',
 		required: true,
 		default: '',
 		placeholder: 'https://example.com/invoice.pdf',
 		description: 'The URL of the PDF file to fill',
+		hint: `Source file URL of the PDF file to fill`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.FillPdfForm],
@@ -36,12 +37,13 @@ export const description: INodeProperties[] = [
 				displayName: 'Metadata',
 				values: [
 					{
-						displayName: 'Field Name',
+						displayName: 'Form Field Name',
 						name: 'fieldName',
 						type: 'string',
 						required: true,
 						default: '',
 						description: 'The name of the field to fill',
+						hint: 'Name of the form field. To find form fields please use the PDF Information operation or our <a href="https://app.pdf.co/pdf-edit-add-helper">PDF Edit Add Helper tool</a>.',
 					},
 					{
 						displayName: 'Text',
@@ -49,6 +51,7 @@ export const description: INodeProperties[] = [
 						type: 'string',
 						default: '',
 						description: 'The text to fill in the field',
+						hint: 'Enter the text you want to insert into the form field. If you need to check a checkbox field then set to `true`. For radio box, set index like `1`.',
 					},
 					{
 						displayName: 'Pages',
@@ -56,7 +59,8 @@ export const description: INodeProperties[] = [
 						type: 'string',
 						default: '0',
 						placeholder: '0',
-						description: 'The pages to fill the field on',
+						description: 'Default: `0` (first page). Use ranges like `0,1-2,5,7-` (7- = from page 7 to end). Negative numbers count from end: `-2` = second-to-last page.',
+						hint: 'Default: `0` (first page). Use ranges like `0,1-2,5,7-` (7- = from page 7 to end). Negative numbers count from end: `-2` = second-to-last page.',
 					},
 					{
 						displayName: 'Font Size',
@@ -131,7 +135,8 @@ export const description: INodeProperties[] = [
 				name: 'name',
 				type: 'string',
 				default: '',
-				description: 'The name of the output file',
+				description: 'Custom name for the output file. If empty, uses default file name.',
+				hint: 'Custom name for the output file. If empty, uses default file name.',
 			},
 			{
 				displayName: 'Webhook URL',
@@ -140,6 +145,7 @@ export const description: INodeProperties[] = [
 				default: '',
 				placeholder: 'https://example.com/callback',
 				description: 'The callback URL or Webhook used to receive the output data',
+				hint: `The callback URL or Webhook used to receive the output data`,
 			},
 			{
 				displayName: 'Output Links Expiration (In Minutes)',
@@ -154,7 +160,8 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				placeholder: `{ 'outputDataFormat': 'base64' }`,
-				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://developer.pdf.co/api/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://docs.pdf.co/api-reference/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
+				hint: `Use "JSON" to adjust custom properties. Review <a href="https://docs.pdf.co/api-reference/profiles">Profiles documentation</a> to set extra options for API calls and may be specific to certain APIs.`,
 			},
 		],
 	}

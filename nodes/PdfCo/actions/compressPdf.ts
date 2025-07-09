@@ -8,13 +8,14 @@ import {
 
 export const description: INodeProperties[] = [
 	{
-		displayName: 'Url',
+		displayName: 'PDF URL',
 		name: 'url',
 		type: 'string',
 		required: true,
 		default: '',
 		placeholder: 'https://example.com/invoice.pdf',
 		description: 'The URL of the PDF file to compress',
+		hint: `Enter source file URL of the PDF file to compress`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.CompressPdf],
@@ -39,7 +40,7 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				description: 'The name of the output file',
-				//hint: `Enter the name of the output file. If not specified, the original file name is used.`,
+				hint: `Enter the name of the output file. If not specified, the original file name is used.`,
 			},
 			{
 				displayName: 'Webhook URL',
@@ -48,7 +49,7 @@ export const description: INodeProperties[] = [
 				default: '',
 				placeholder: 'https://example.com/callback',
 				description: 'The callback URL or Webhook used to receive the output data',
-				//hint: 'The callback URL or Webhook used to receive the output data.',
+				hint: 'The callback URL or Webhook used to receive the output data.',
 			},
 			{
 				displayName: 'Output Links Expiration (In Minutes)',
@@ -66,6 +67,7 @@ export const description: INodeProperties[] = [
 				},
 				default: '',
 				description: 'The password of the PDF file',
+				hint: 'The password of the password-protected PDF file',
 			},
 			{
 				displayName: 'HTTP Username',
@@ -73,6 +75,7 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				description: 'The HTTP username if required to access source URL',
+				hint: 'The HTTP username if required to access source URL',
 			},
 			{
 				displayName: 'HTTP Password',
@@ -83,6 +86,7 @@ export const description: INodeProperties[] = [
 				},
 				default: '',
 				description: 'The HTTP password if required to access source URL',
+				hint: 'The HTTP password if required to access source URL',
 			},
 			{
 				displayName: 'Custom Compression Configuration',
@@ -90,6 +94,7 @@ export const description: INodeProperties[] = [
 				type: 'json',
 				default: '',
 				description: 'The custom compression configuration to use',
+				hint: 'Define custom compression configuration. See PDF.co <a href="https://docs.pdf.co/api-reference/pdf-compress#the-default-config-object">PDF Compression Docs</a> for supported options.',
 			},
 		],
 	},

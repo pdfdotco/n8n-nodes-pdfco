@@ -8,6 +8,7 @@ import type {
 	IRequestOptions,
 } from 'n8n-workflow';
 import { NodeApiError } from 'n8n-workflow';
+import { PDFCO_CONSTANTS } from './constants';
 
 async function delay(
 	this: IHookFunctions | IExecuteFunctions | ILoadOptionsFunctions,
@@ -26,12 +27,12 @@ export async function pdfcoApiRequest(
 ): Promise<any> {
 	const credentials = await this.getCredentials('pdfcoApi');
 	let options: IRequestOptions = {
-		baseURL: 'https://api.pdf.co',
+		baseURL: PDFCO_CONSTANTS.BASE_URL,
 		url: url,
 		headers: {
 			'content-type': 'application/json',
 			'x-api-key': credentials.apiKey,
-			'user-agent': 'n8n/1.0.3',
+			'user-agent': PDFCO_CONSTANTS.USER_AGENT,
 		},
 		method,
 		qs,
@@ -160,7 +161,7 @@ export function sanitizeProfiles(data: IDataObject): void {
 		data.profiles = sanitized;
 	} catch (error) {
 		throw new Error(
-			'Invalid JSON in Profiles. Check https://developer.pdf.co/api/profiles/ or contact support@pdf.co for help. ' +
+			'Invalid JSON in Profiles. Check https://docs.pdf.co/api-reference/profiles/ or contact support@pdf.co for help. ' +
 				(error as Error).message,
 		);
 	}
