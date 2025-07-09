@@ -4,14 +4,27 @@ import { pdfcoApiRequestWithJobCheck, ActionConstants } from '../GenericFunction
 
 export const description: INodeProperties[] = [
 	{
-		displayName: 'Url',
+		displayName: 'PDF URL',
 		name: 'url',
 		type: 'string',
 		required: true,
 		default: '',
 		placeholder: 'https://example.com/invoice.pdf',
-		description: 'The URL of the invoice to parse',
-		//hint: `Enter your file link. See our guide at https://developer.pdf.co/integrations/zapier/input-file-sources/index.html for details.`,
+		description: 'URL to the source PDF file',
+		hint: `Enter the URL of the invoice you want to extract. Make sure it's accessible and contains only one invoice. Use our <b>PDF Split</b> module if it includes multiple invoices.`,
+		displayOptions: {
+			show: {
+				operation: [ActionConstants.AiInvoiceParser],
+			},
+		}
+	},
+	{
+		displayName: 'Custom Fields',
+		name: 'customfield',
+		type: 'string',
+		default: '',
+		placeholder: 'storeNumber, lineTotal, financialCharges',
+		hint: `Extract fields not included in the <a href="https://docs.pdf.co/api-reference/ai-invoice-parser#invoice-schema">default list</a> by entering fields in comma-separated format (e.g., <em>storeNumber, lineTotal, financialCharges</em>)`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.AiInvoiceParser],
@@ -37,7 +50,7 @@ export const description: INodeProperties[] = [
 				default: '',
 				description: 'The callback URL or Webhook used to receive the output data',
 				placeholder: 'https://example.com/callback',
-				//hint: 'The callback URL or Webhook used to receive the output data.',
+				hint: 'Enter a webhook URL to receive the extracted data automatically when parsing is done.',
 			},
 		],
 	}
@@ -47,6 +60,8 @@ export const description: INodeProperties[] = [
 export async function execute(this: IExecuteFunctions, index: number) {
 	// Retrieve the "url" parameter.
 	const inputUrl = this.getNodeParameter('url', index) as string;
+
+	const customfield = this.getNodeParameter('customfield', index) as string;
 
 	// Retrieve advanced options (returns an empty object if not provided)
 	const advancedOptions = this.getNodeParameter('advancedOptions', index) as IDataObject;
@@ -58,7 +73,7 @@ export async function execute(this: IExecuteFunctions, index: number) {
 	const endpoint = `/v1/ai-invoice-parser`;
 
 	// Build the payload object; add fileName and profiles only if provided
-	const body: IDataObject = { url: inputUrl, async: true };
+	const body: IDataObject = { url: inputUrl, customfield: customfield, async: true };
 	if (callback) body.callback = callback;
 
 	// Make the API request and return the response in the expected format
