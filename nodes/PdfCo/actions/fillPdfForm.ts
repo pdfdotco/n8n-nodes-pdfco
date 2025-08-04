@@ -15,7 +15,7 @@ export const description: INodeProperties[] = [
 		default: '',
 		placeholder: 'https://example.com/invoice.pdf',
 		description: 'The URL of the PDF file to fill',
-		hint: `Source file URL of the PDF file to fill`,
+		hint: `Source file URL of the PDF file to fill. <a href="https://docs.pdf.co/integrations/n8n/fill-a-pdf-form" target="_blank">See full guide</a>.`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.FillPdfForm],
@@ -160,8 +160,7 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				placeholder: `{ 'outputDataFormat': 'base64' }`,
-				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://docs.pdf.co/api-reference/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
-				hint: `Use "JSON" to adjust custom properties. Review <a href="https://docs.pdf.co/api-reference/profiles">Profiles documentation</a> to set extra options for API calls and may be specific to certain APIs.`,
+				hint: `Use JSON to customize PDF processing with options like output resolution, OCR settings, and more. Check our <a href="https://docs.pdf.co/integrations/n8n/fill-a-pdf-form#custom-profiles" target="_blank">Custom Profile Guide</a> to see all available parameters for your current operation.`,
 			},
 		],
 	}

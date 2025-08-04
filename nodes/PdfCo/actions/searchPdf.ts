@@ -14,8 +14,7 @@ export const description: INodeProperties[] = [
 		required: true,
 		default: '',
 		placeholder: 'https://example.com/document.pdf',
-		description: 'The URL of the PDF file to search',
-		hint: 'Source file URL of the PDF file to search',
+		hint: 'Source file URL of the PDF file to search. <a href="https://docs.pdf.co/integrations/n8n/search-in-pdf" target="_blank">See full guide</a>.',
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.SearchPdf],
@@ -98,14 +97,14 @@ export const description: INodeProperties[] = [
 				default: 60,
 				description: 'The expiration time of the output link in minutes',
 			},
-			// {
-			// 	displayName: 'Inline',
-			// 	name: 'inline',
-			// 	type: 'boolean',
-			// 	default: true,
-			// 	description: 'Whether to return the output in the response',
-			// 	hint: `Whether to return the output in the response`,
-			// },
+			{
+				displayName: 'Inline',
+				name: 'inline',
+				type: 'boolean',
+				default: true,
+				description: 'Whether to return the output in the response',
+				hint: `Whether to return the output in the response`,
+			},
 			{
 				displayName: 'Word Matching Mode',
 				name: 'wordMatchingMode',
@@ -163,8 +162,7 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				placeholder: `{ 'outputDataFormat': 'base64' }`,
-				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://docs.pdf.co/api-reference/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
-				hint: `Use "JSON" to adjust custom properties. Review <a href="https://docs.pdf.co/api-reference/profiles">Profiles documentation</a> to set extra options for API calls and may be specific to certain APIs.`,
+				hint: `Use JSON to customize PDF processing with options like output resolution, OCR settings, and more. Check our <a href="https://docs.pdf.co/integrations/n8n/search-in-pdf#custom-profiles" target="_blank">Custom Profile Guide</a> to see all available parameters for your current operation.`,
 			},
 		],
 	},
@@ -181,8 +179,8 @@ export async function execute(this: IExecuteFunctions, index: number) {
 		url: inputUrl,
 		searchString,
 		regexSearch,
-		async: true,
 		inline: true,
+		async: true
 	};
 
 	if (pages) {
@@ -210,8 +208,8 @@ export async function execute(this: IExecuteFunctions, index: number) {
 	const password = advancedOptions?.password as string | undefined;
 	if (password) body.password = password;
 
-	// const inline = advancedOptions?.inline as boolean | undefined;
-	// if (inline !== undefined) body.inline = inline;
+	const inline = advancedOptions?.inline as boolean | undefined;
+	if (inline !== undefined) body.inline = inline;
 
 	const profiles = advancedOptions?.profiles as string | undefined;
 	if (profiles) body.profiles = profiles;
@@ -219,5 +217,11 @@ export async function execute(this: IExecuteFunctions, index: number) {
 	sanitizeProfiles(body);
 
 	const responseData = await pdfcoApiRequestWithJobCheck.call(this, '/v1/pdf/find', body);
+
+	if (body.inline && responseData.url) {
+		const response = await this.helpers.request(responseData.url);
+		responseData.body = JSON.parse(response);
+	}
+
 	return this.helpers.returnJsonArray(responseData);
 }

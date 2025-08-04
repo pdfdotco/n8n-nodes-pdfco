@@ -11,7 +11,7 @@ export const description: INodeProperties[] = [
 		default: '',
 		placeholder: 'https://example.com/invoice.pdf',
 		description: 'URL to the source PDF file',
-		hint: `Enter the URL of the invoice you want to extract. Make sure it's accessible and contains only one invoice. Use our <b>PDF Split</b> module if it includes multiple invoices.`,
+		hint: `Enter the URL of the invoice you want to extract. Make sure it's accessible and contains only one invoice. Use our <b><a href="https://docs.pdf.co/integrations/n8n/split-pdf" target="_blank">PDF Split</a></b> module if it includes multiple invoices. <a href="https://docs.pdf.co/integrations/n8n/ai-invoice-parser" target="_blank">See full guide</a>.`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.AiInvoiceParser],

@@ -8,12 +8,12 @@
 	"resources": {
 		"credentialDocumentation": [
 			{
-				"url": "https://docs.pdf.co/api-reference"
+				"url": "https://docs.pdf.co/integrations/n8n/getting-started#credentials"
 			}
 		],
 		"primaryDocumentation": [
 			{
-				"url": "https://docs.pdf.co/api-reference"
+				"url": "https://docs.pdf.co/integrations/n8n/getting-started"
 			}
 		]
 	}

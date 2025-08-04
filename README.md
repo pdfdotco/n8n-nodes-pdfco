@@ -153,3 +153,8 @@ For detailed examples and workflow templates, visit our [documentation](https://
 ### 1.0.4
 - AI Invoice Parser: Added support for custom field extraction, enabling more flexible and tailored data parsing. 
 - Added user-friendly descriptions for all PDF.co modules to help users better understand each feature's capabilities
+
+### 1.0.5
+- Search PDF/Convert From PDF: Added support for the Inline option, enabling direct file output
+- Barcode Generator: Resolved an issue affecting barcode generation functionality.
+- Updated description links to point to new dedicated documentation

@@ -27,8 +27,7 @@ export const description: INodeProperties[] = [
 				operation: [ActionConstants.UploadFile],
 			},
 		},
-		description: 'The method to use for uploading the file',
-		hint: `The method to use for uploading the file`,
+		hint: `The method to use for uploading the file. <a href="https://docs.pdf.co/integrations/n8n/upload-file" target="_blank">See full guide</a>.`,
 	},
 	{
 		displayName: 'Binary File',

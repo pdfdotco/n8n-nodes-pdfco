@@ -14,8 +14,7 @@ export const description: INodeProperties[] = [
 		required: true,
 		default: '',
 		placeholder: 'https://example.com/invoice.pdf',
-		description: 'The URL of the PDF file to compress',
-		hint: `Enter source file URL of the PDF file to compress`,
+		hint: `Enter source file URL of the PDF file to compress. <a href="https://docs.pdf.co/integrations/n8n/compress-pdf" target="_blank">See full guide</a>.`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.CompressPdf],
@@ -94,7 +93,7 @@ export const description: INodeProperties[] = [
 				type: 'json',
 				default: '',
 				description: 'The custom compression configuration to use',
-				hint: 'Define custom compression configuration. See PDF.co <a href="https://docs.pdf.co/api-reference/pdf-compress#the-default-config-object">PDF Compression Docs</a> for supported options.',
+				hint: 'Define custom compression configuration. See PDF.co <a href="https://docs.pdf.co/integrations/n8n/compress-pdf#custom-compression-configuration" target="_blank">PDF Compression Docs</a> for supported options.',
 			},
 		],
 	},

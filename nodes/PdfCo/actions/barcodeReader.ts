@@ -14,8 +14,7 @@ export const description: INodeProperties[] = [
 		required: true,
 		default: '',
 		placeholder: 'https://example.com/document.pdf',
-		description: 'The URL of the PDF / Image file to read',
-		hint: `The URL of the PDF / Image file to read`,
+		hint: 'The URL of the PDF / Image file to read. <a href="https://docs.pdf.co/integrations/n8n/barcode-reader" target="_blank">See full guide</a>.',
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.BarcodeReader],
@@ -304,8 +303,7 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				placeholder: `{ 'outputDataFormat': 'base64' }`,
-				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://docs.pdf.co/api-reference/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
-				hint: `Use "JSON" to adjust custom properties. Review <a href="https://docs.pdf.co/api-reference/profiles">Profiles documentation</a> to set extra options for API calls and may be specific to certain APIs.`,
+				hint: `Use JSON to customize PDF processing with options like output resolution, OCR settings, and more. Check our <a href="https://docs.pdf.co/integrations/n8n/barcode-reader#custom-profiles" target="_blank">Custom Profile Guide</a> to see all available parameters for your current operation.`,
 			},
 		],
 	},

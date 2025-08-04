@@ -40,7 +40,7 @@ export const description: INodeProperties[] = [
 		default: '',
 		placeholder: 'https://google.com',
 		description: 'The URL of the page to convert to PDF',
-		hint: `Enter the full web page URL (e.g., https://google.com) you want to convert to PDF.`,
+		hint: `Enter the full web page URL (e.g., https://google.com) you want to convert to PDF. <a href="https://docs.pdf.co/integrations/n8n/url-html-to-pdf" target="_blank">See full guide</a>.`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.UrlHtmlToPDF],
@@ -59,7 +59,7 @@ export const description: INodeProperties[] = [
 		default: '',
 		placeholder: '<h1>Hello World</h1>',
 		description: 'The HTML code to convert to PDF',
-		hint: `Enter the HTML code to convert to PDF eg. &lt;h1&gt;Hello World&lt;/h1&gt;`,
+		hint: `Enter the HTML code to convert to PDF eg. &lt;h1&gt;Hello World&lt;/h1&gt; <a href="https://docs.pdf.co/integrations/n8n/url-html-to-pdf" target="_blank">See full guide</a>.`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.UrlHtmlToPDF],
@@ -75,7 +75,7 @@ export const description: INodeProperties[] = [
 		default: '',
 		placeholder: '1',
 		description: 'The ID of the HTML template to use',
-		hint: `Enter the ID of the HTML template you created in PDF.co. This ID is used to generate the PDF layout. You can view your <a href="https://app.pdf.co/html-templates-tool/manager">HTML templates</a> here.`,
+		hint: `Enter the ID of the HTML template you created in PDF.co, it defines the layout used to generate the PDF. You can view your <a href="https://app.pdf.co/html-templates-tool/manager" target="_blank">templates here</a> or read the <a href="https://docs.pdf.co/integrations/n8n/url-html-to-pdf#html-template-to-pdf" target="_blank">full guide</a> to learn how it works.`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.UrlHtmlToPDF],
@@ -245,9 +245,7 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				placeholder: `{ 'outputDataFormat': 'base64' }`,
-				description:
-					'Use "JSON" to adjust custom properties. Review Profiles at https://docs.pdf.co/api-reference/pdf-from-html/convert to set extra options for API calls and may be specific to certain APIs.',
-				hint: `Use "JSON" to adjust custom properties. Review <a href="https://docs.pdf.co/api-reference/pdf-from-html/convert">Profiles documentation</a> to set extra options for API calls and may be specific to certain APIs.`,
+				hint: `Use JSON to customize PDF processing with options like output resolution, OCR settings, and more. Check our <a href="https://docs.pdf.co/integrations/n8n/url-html-to-pdf#custom-profiles" target="_blank">Custom Profile Guide</a> to see all available parameters for your current operation.`,
 			},
 		],
 	},

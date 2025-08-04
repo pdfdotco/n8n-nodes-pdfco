@@ -1,7 +1,7 @@
 import type { INodeProperties } from 'n8n-workflow';
 import type { IExecuteFunctions, IDataObject } from 'n8n-workflow';
 import {
-	pdfcoApiRequest,
+	pdfcoApiRequestWithJobCheck,
 	sanitizeProfiles,
 	ActionConstants,
 } from '../GenericFunctions';
@@ -13,8 +13,7 @@ export const description: INodeProperties[] = [
 		type: 'string',
 		required: true,
 		default: '',
-		description: 'Enter the value you want to encode into the barcode',
-		hint: `Enter the value you want to encode into the barcode`,
+		hint: `Enter the value you want to encode into the barcode. <a href="https://docs.pdf.co/integrations/n8n/barcode-generator" target="_blank">See full guide</a>.`,
 		displayOptions: {
 			show: {
 				operation: [ActionConstants.BarcodeGenerator],
@@ -302,9 +301,8 @@ export const description: INodeProperties[] = [
 				name: 'profiles',
 				type: 'string',
 				default: '',
-				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://docs.pdf.co/api-reference/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
 				placeholder: `{ 'outputDataFormat': 'base64' }`,
-				hint: `Use "JSON" to adjust custom properties. Review <a href="https://docs.pdf.co/api-reference/profiles">Profiles documentation</a> to set extra options for API calls and may be specific to certain APIs.`,
+				hint: `Use JSON to customize PDF processing with options like output resolution, OCR settings, and more. Check our <a href="https://docs.pdf.co/integrations/n8n/barcode-generator#custom-profiles" target="_blank">Custom Profile Guide</a> to see all available parameters for your current operation.`,
 			},
 		],
 	},
@@ -319,10 +317,13 @@ export async function execute(this: IExecuteFunctions, index: number) {
 	const body: IDataObject = {
 		value,
 		type,
+		async: true,
 	};
 
-	const decorationImage = this.getNodeParameter('decorationImage', index) as string;
-	if (decorationImage) body.decorationImage = decorationImage;
+	if (type === 'QRCode') {
+		const decorationImage = this.getNodeParameter('decorationImage', index) as string;
+		if (decorationImage) body.decorationImage = decorationImage;
+	}
 
 	const fileName = advancedOptions?.name as string | undefined;
 	if (fileName) body.name = fileName;
@@ -335,6 +336,6 @@ export async function execute(this: IExecuteFunctions, index: number) {
 
 	sanitizeProfiles(body);
 
-	const responseData = await pdfcoApiRequest.call(this, '/v1/barcode/generate', body);
+	const responseData = await pdfcoApiRequestWithJobCheck.call(this, '/v1/barcode/generate', body);
 	return this.helpers.returnJsonArray(responseData);
 }

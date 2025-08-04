@@ -13,8 +13,7 @@ export const description: INodeProperties[] = [
 		type: 'string',
 		required: true,
 		default: '',
-		description: 'The URL of the PDF file to search and replace text in',
-		hint: 'Source file URL of the PDF file to search and replace text in',
+		hint: 'Source file URL of the PDF file to search and replace text in. <a href="https://docs.pdf.co/integrations/n8n/search-and-replace-text-in-pdf" target="_blank">See full guide</a>.',
 		placeholder: 'https://example.com/document.pdf',
 		displayOptions: {
 			show: {
@@ -267,8 +266,7 @@ export const description: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				placeholder: `{ 'outputDataFormat': 'base64' }`,
-				description: 'Use "JSON" to adjust custom properties. Review Profiles at https://docs.pdf.co/api-reference/profiles/index.html to set extra options for API calls and may be specific to certain APIs.',
-				hint: `Use "JSON" to adjust custom properties. Review <a href="https://docs.pdf.co/api-reference/profiles">Profiles documentation</a> to set extra options for API calls and may be specific to certain APIs.`,
+				hint: `Use JSON to customize PDF processing with options like output resolution, OCR settings, and more. Check our <a href="https://docs.pdf.co/integrations/n8n/search-and-replace-text-in-pdf#custom-profiles" target="_blank">Custom Profile Guide</a> to see all available parameters for your current operation.`,
 			},
 		],
 	},
