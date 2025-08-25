@@ -158,3 +158,6 @@ For detailed examples and workflow templates, visit our [documentation](https://
 - Search PDF/Convert From PDF: Added support for the Inline option, enabling direct file output
 - Barcode Generator: Resolved an issue affecting barcode generation functionality.
 - Updated description links to point to new dedicated documentation
+
+### 1.0.6
+- AI Invoice Parser: Clearer field descriptions and helpful usage hints
