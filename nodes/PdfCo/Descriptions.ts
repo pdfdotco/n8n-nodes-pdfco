@@ -196,5 +196,5 @@ export const descriptions: INodeTypeDescription = {
 		...uploadFile.description,
 	],
 	subtitle: '={{$parameter["operation"]}}',
-	version: 1,
+	version: [1, 1.1],
 };
