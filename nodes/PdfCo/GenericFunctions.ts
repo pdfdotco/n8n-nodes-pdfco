@@ -26,8 +26,9 @@ export async function pdfcoApiRequest(
 	option: IDataObject = {},
 ): Promise<any> {
 	const credentials = await this.getCredentials('pdfcoApi');
+	const baseURL = this.getNode().typeVersion >= 1.1 ? credentials.baseUrl : PDFCO_CONSTANTS.BASE_URL;
 	let options: IRequestOptions = {
-		baseURL: PDFCO_CONSTANTS.BASE_URL,
+		baseURL,
 		url: url,
 		headers: {
 			'content-type': 'application/json',
