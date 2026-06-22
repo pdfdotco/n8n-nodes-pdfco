@@ -7,12 +7,17 @@ import type {
 	IHttpRequestMethods,
 	IRequestOptions,
 } from 'n8n-workflow';
+
+interface PdfcoCredentials {
+	apiKey: string;
+	baseUrl: string;
+}
 import { NodeApiError } from 'n8n-workflow';
 import { PDFCO_CONSTANTS } from './constants';
 
 async function delay(
 	this: IHookFunctions | IExecuteFunctions | ILoadOptionsFunctions,
-	ms: number
+	ms: number,
 ): Promise<void> {
 	await pdfcoApiRequest.call(this, '/v1/delay', {}, 'GET', { val: ms });
 }
@@ -25,9 +30,11 @@ export async function pdfcoApiRequest(
 	qs: IDataObject = {},
 	option: IDataObject = {},
 ): Promise<any> {
-	const credentials = await this.getCredentials('pdfcoApi');
+	const credentials = (await this.getCredentials('pdfcoApi')) as unknown as PdfcoCredentials;
+	const baseURL =
+		this.getNode().typeVersion >= 1.1 ? credentials.baseUrl : PDFCO_CONSTANTS.BASE_URL;
 	let options: IRequestOptions = {
-		baseURL: PDFCO_CONSTANTS.BASE_URL,
+		baseURL,
 		url: url,
 		headers: {
 			'content-type': 'application/json',
@@ -364,7 +371,7 @@ export async function loadResource(this: ILoadOptionsFunctions, resource: string
 			{ name: 'Uzbek', value: 'uzb' },
 			{ name: 'Uzbek - Cyrillic', value: 'uzb_cyrl' },
 			{ name: 'Vietnamese', value: 'vie' },
-			{ name: 'Yiddish', value: 'yid' }
+			{ name: 'Yiddish', value: 'yid' },
 		];
 	}
 	return [];

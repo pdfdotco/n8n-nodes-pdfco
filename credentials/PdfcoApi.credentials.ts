@@ -20,7 +20,14 @@ export class PdfcoApi implements ICredentialType {
 				password: true,
 			},
 			hint: `To get your PDF.co API key please <a href="https://app.pdf.co/signup?utm_source=n8n&utm_medium=sign-up">click here to create your account</a>`,
+		},
+		{
+			displayName: 'Base URL',
+			name: 'baseUrl',
+			type: 'hidden',
+			default: 'https://api.pdf.co',
 		}
+
 	];
 
 	authenticate: IAuthenticateGeneric = {
@@ -36,7 +43,7 @@ export class PdfcoApi implements ICredentialType {
 	// The block below tells how this credential can be tested
 	test: ICredentialTestRequest = {
 		request: {
-			url: `${PDFCO_CONSTANTS.BASE_URL}/v1/account/credit/balance`,
+			url: '={{$credentials?.baseUrl}}/v1/account/credit/balance',
 		},
 	};
 }
