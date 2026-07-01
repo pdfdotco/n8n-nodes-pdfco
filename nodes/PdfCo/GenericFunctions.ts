@@ -15,11 +15,11 @@ interface PdfcoCredentials {
 import { NodeApiError } from 'n8n-workflow';
 import { PDFCO_CONSTANTS } from './constants';
 
-async function delay(
-	this: IHookFunctions | IExecuteFunctions | ILoadOptionsFunctions,
-	ms: number,
-): Promise<void> {
-	await pdfcoApiRequest.call(this, '/v1/delay', {}, 'GET', { val: ms });
+const PDFCO_JOB_CHECK_INTERVAL_MS = 3000;
+const PDFCO_JOB_CHECK_MAX_DURATION_MS = 30 * 60 * 1000;
+
+async function delay(ms: number): Promise<void> {
+	await new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 export async function pdfcoApiRequest(
@@ -86,6 +86,7 @@ export async function pdfcoApiRequestWithJobCheck(
 	}
 
 	let jobCheckResp: any = { status: 'none' };
+	const startedAt = Date.now();
 
 	do {
 		// Check job response
@@ -102,7 +103,17 @@ export async function pdfcoApiRequestWithJobCheck(
 		}
 
 		if (jobCheckResp.status === 'working') {
-			await delay.call(this, 3000);
+			const elapsedMs = Date.now() - startedAt;
+
+			if (elapsedMs >= PDFCO_JOB_CHECK_MAX_DURATION_MS) {
+				throw new NodeApiError(this.getNode(), {
+					message: `PDF.co job ${mainRequestResp.jobId} did not finish within ${PDFCO_JOB_CHECK_MAX_DURATION_MS / 60000} minutes`,
+					jobId: mainRequestResp.jobId,
+					status: jobCheckResp.status,
+				} as JsonObject);
+			}
+
+			await delay(PDFCO_JOB_CHECK_INTERVAL_MS);
 		}
 	} while (jobCheckResp.status === 'working');
 
