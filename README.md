@@ -161,3 +161,9 @@ For detailed examples and workflow templates, visit our [documentation](https://
 
 ### 1.0.6
 - AI Invoice Parser: Clearer field descriptions and helpful usage hints
+
+### 1.0.7
+- Added n8n Connect support by moving the PDF.co API base URL into credentials, allowing n8n to inject a proxied base URL at runtime
+- Added a hidden credentials `baseUrl` field that defaults to `https://api.pdf.co`
+- Updated credential testing to use the credentials-provided base URL
+- Bumped the node `typeVersion` to 1.1 for fresh installs while preserving compatibility with existing typeVersion 1 nodes
