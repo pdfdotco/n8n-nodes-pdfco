@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-pdfco",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Pdf.co nodes for n8n",
   "keywords": [
     "n8n-community-node-package"
@@ -36,7 +36,8 @@
   "n8n": {
     "n8nNodesApiVersion": 1,
     "credentials": [
-      "dist/credentials/PdfcoApi.credentials.js"
+      "dist/credentials/PdfcoApi.credentials.js",
+      "dist/credentials/PdfcoOAuth2Api.credentials.js"
     ],
     "nodes": [
       "dist/nodes/PdfCo/PdfCo.node.js"

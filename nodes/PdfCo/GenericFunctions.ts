@@ -12,6 +12,26 @@ interface PdfcoCredentials {
 	apiKey: string;
 	baseUrl: string;
 }
+
+interface PdfcoOAuth2Credentials {
+	baseUrl: string;
+	userInfoUrl: string;
+}
+
+interface PdfcoUserInfoResponse {
+	api_key?: string;
+}
+
+interface PdfcoOAuth2RequestOptions {
+	tokenExpiredStatusCode?: number;
+}
+
+interface PdfcoOAuth2ApiKeyCacheContext {
+	__pdfcoOAuth2ApiKeyCache?: Record<string, string>;
+}
+
+const PDFCO_OAUTH2_API_KEY_CACHE_PROPERTY = '__pdfcoOAuth2ApiKeyCache';
+
 import { NodeApiError } from 'n8n-workflow';
 import { PDFCO_CONSTANTS } from './constants';
 
@@ -22,6 +42,63 @@ async function delay(
 	await pdfcoApiRequest.call(this, '/v1/delay', {}, 'GET', { val: ms });
 }
 
+function getAuthenticationType(
+	this: IHookFunctions | IExecuteFunctions | ILoadOptionsFunctions,
+): 'apiKey' | 'oAuth2' {
+	const authentication = this.getNodeParameter('authentication', 0) as 'apiKey' | 'oAuth2';
+	return authentication === 'oAuth2' ? 'oAuth2' : 'apiKey';
+}
+
+async function getApiKeyFromUserInfo(
+	this: IHookFunctions | IExecuteFunctions | ILoadOptionsFunctions,
+	userInfoUrl: string,
+): Promise<string> {
+	const cacheContext = this as typeof this & PdfcoOAuth2ApiKeyCacheContext;
+	const cachedApiKey = cacheContext[PDFCO_OAUTH2_API_KEY_CACHE_PROPERTY]?.[userInfoUrl];
+
+	if (cachedApiKey) {
+		return cachedApiKey;
+	}
+
+	let userInfo: PdfcoUserInfoResponse;
+
+	try {
+		userInfo = (await (this.helpers as any).requestOAuth2.call(
+			this,
+			'pdfcoOAuth2Api',
+			{
+				url: userInfoUrl,
+				method: 'GET',
+				json: true,
+			},
+			{ tokenExpiredStatusCode: 401 } as PdfcoOAuth2RequestOptions,
+		)) as PdfcoUserInfoResponse;
+	} catch (error) {
+		throw new NodeApiError(
+			this.getNode(),
+			{ error: error as JsonObject },
+			{
+				message: 'PDF.co OAuth credentials are not connected or need to be reconnected.',
+				description:
+					'Open the PDF.co OAuth2 credential, click Connect, and try again. If it was already connected, reconnect it to refresh the OAuth token.',
+			},
+		);
+	}
+
+	if (!userInfo.api_key) {
+		throw new NodeApiError(this.getNode(), {
+			message: 'PDF.co OAuth userinfo response did not include api_key.',
+		});
+	}
+
+	cacheContext[PDFCO_OAUTH2_API_KEY_CACHE_PROPERTY] = {
+		...cacheContext[PDFCO_OAUTH2_API_KEY_CACHE_PROPERTY],
+		[userInfoUrl]: userInfo.api_key,
+	};
+
+	return userInfo.api_key;
+}
+
 export async function pdfcoApiRequest(
 	this: IHookFunctions | IExecuteFunctions | ILoadOptionsFunctions,
 	url: string,
@@ -30,15 +107,25 @@ export async function pdfcoApiRequest(
 	qs: IDataObject = {},
 	option: IDataObject = {},
 ): Promise<any> {
-	const credentials = (await this.getCredentials('pdfcoApi')) as unknown as PdfcoCredentials;
-	const baseURL =
-		this.getNode().typeVersion >= 1.1 ? credentials.baseUrl : PDFCO_CONSTANTS.BASE_URL;
+	const authentication = getAuthenticationType.call(this);
+	const credentials =
+		authentication === 'oAuth2'
+			? ((await this.getCredentials('pdfcoOAuth2Api')) as unknown as PdfcoOAuth2Credentials)
+			: ((await this.getCredentials('pdfcoApi')) as unknown as PdfcoCredentials);
+	const baseURL = credentials.baseUrl || PDFCO_CONSTANTS.BASE_URL;
+	const apiKey =
+		authentication === 'oAuth2'
+			? await getApiKeyFromUserInfo.call(
+					this,
+					(credentials as PdfcoOAuth2Credentials).userInfoUrl,
+				)
+			: (credentials as PdfcoCredentials).apiKey;
 	let options: IRequestOptions = {
 		baseURL,
 		url: url,
 		headers: {
 			'content-type': 'application/json',
-			'x-api-key': credentials.apiKey,
+			'x-api-key': apiKey,
 			'user-agent': PDFCO_CONSTANTS.USER_AGENT,
 		},
 		method,

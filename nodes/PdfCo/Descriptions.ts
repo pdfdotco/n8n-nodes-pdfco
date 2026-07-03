@@ -39,9 +39,40 @@ export const descriptions: INodeTypeDescription = {
 		{
 			name: 'pdfcoApi',
 			required: true,
+			displayOptions: {
+				show: {
+					authentication: ['apiKey'],
+				},
+			},
+		},
+		{
+			name: 'pdfcoOAuth2Api',
+			required: true,
+			displayOptions: {
+				show: {
+					authentication: ['oAuth2'],
+				},
+			},
 		},
 	],
 	properties: [
+		{
+			displayName: 'Authentication',
+			name: 'authentication',
+			type: 'options',
+			noDataExpression: true,
+			options: [
+				{
+					name: 'API Key',
+					value: 'apiKey',
+				},
+				{
+					name: 'OAuth2',
+					value: 'oAuth2',
+				},
+			],
+			default: 'apiKey',
+		},
 		{
 			displayName: 'Action',
 			name: 'operation',
