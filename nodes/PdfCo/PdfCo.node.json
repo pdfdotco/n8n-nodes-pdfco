@@ -1,5 +1,5 @@
 {
-	"node": "n8n-nodes-base.PdfCo",
+	"node": "n8n-nodes-pdfco.PdfCo",
 	"nodeVersion": "1.0",
 	"codexVersion": "1.0",
 	"categories": [

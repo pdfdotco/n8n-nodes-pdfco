@@ -1,12 +1,12 @@
 {
   "name": "n8n-nodes-pdfco",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Pdf.co nodes for n8n",
   "keywords": [
     "n8n-community-node-package"
   ],
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://github.com/pdfdotco/n8n-nodes-pdfco",
   "author": {
     "name": "Pdf.co Dev",
     "email": "admin@artifex.com"
