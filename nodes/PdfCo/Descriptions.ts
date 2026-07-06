@@ -24,7 +24,7 @@ import { ActionConstants } from './GenericFunctions';
 
 export const descriptions: INodeTypeDescription = {
 	displayName: 'PDF.co API',
-	name: 'PDFco API',
+	name: 'PDFco Api',
 	description:
 		'Generate PDF, extract data from PDF, split PDF, merge PDF, convert PDF. Fill PDF forms, add text and images to pdf and much more with pdf.co!',
 	defaults: {
