@@ -23,12 +23,12 @@ import * as uploadFile from './actions/uploadFile';
 import { ActionConstants } from './GenericFunctions';
 
 export const descriptions: INodeTypeDescription = {
-	displayName: 'PDF.co Api',
+	displayName: 'PDF.co API',
 	name: 'PDFco Api',
 	description:
 		'Generate PDF, extract data from PDF, split PDF, merge PDF, convert PDF. Fill PDF forms, add text and images to pdf and much more with pdf.co!',
 	defaults: {
-		name: 'PDFco Api',
+		name: 'PDFco API',
 	},
 	group: ['transform'],
 	// eslint-disable-next-line n8n-nodes-base/node-class-description-icon-not-svg
@@ -39,9 +39,40 @@ export const descriptions: INodeTypeDescription = {
 		{
 			name: 'pdfcoApi',
 			required: true,
+			displayOptions: {
+				show: {
+					authentication: ['apiKey'],
+				},
+			},
+		},
+		{
+			name: 'pdfcoOAuth2Api',
+			required: true,
+			displayOptions: {
+				show: {
+					authentication: ['oAuth2'],
+				},
+			},
 		},
 	],
 	properties: [
+		{
+			displayName: 'Authentication',
+			name: 'authentication',
+			type: 'options',
+			noDataExpression: true,
+			options: [
+				{
+					name: 'API Key',
+					value: 'apiKey',
+				},
+				{
+					name: 'OAuth2',
+					value: 'oAuth2',
+				},
+			],
+			default: 'apiKey',
+		},
 		{
 			displayName: 'Action',
 			name: 'operation',

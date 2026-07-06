@@ -167,3 +167,16 @@ For detailed examples and workflow templates, visit our [documentation](https://
 - Added a hidden credentials `baseUrl` field that defaults to `https://api.pdf.co`
 - Updated credential testing to use the credentials-provided base URL
 - Bumped the node `typeVersion` to 1.1 for fresh installs while preserving compatibility with existing typeVersion 1 nodes
+
+### 1.0.8
+- Fixed n8n verification metadata
+
+### 1.0.9
+- Added PDF.co OAuth2 authentication support alongside the existing API key authentication
+- Registered the OAuth2 credential type in the n8n package metadata
+- Removed the `preinstall` lifecycle script to avoid blocking n8n package verification with package-manager enforcement
+- Replaced deprecated `this.helpers.request()` calls with `this.helpers.httpRequest()`
+- Updated the node label from `PDF.co Api` to `PDF.co API`
+- Normalized Split PDF option descriptions to sentence case
+- Improved PDF.co job polling by using local polling delay instead of the `/v1/delay` API endpoint and adding a 30-minute timeout
+- Removed SSL certificate validation bypass from presigned upload requests

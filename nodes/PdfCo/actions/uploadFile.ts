@@ -166,11 +166,10 @@ export async function execute(this: IExecuteFunctions, index: number) {
 			headers: {
 				'Content-Type': 'application/octet-stream',
 			},
-			skipSslCertificateValidation: true,
 		};
 
 		// Upload the file
-		await this.helpers.request(uploadOptions);
+		await this.helpers.httpRequest(uploadOptions);
 
 		// Step 3: Return the final URL
 		return this.helpers.returnJsonArray({ url: finalUrl });

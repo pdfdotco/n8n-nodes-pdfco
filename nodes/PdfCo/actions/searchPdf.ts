@@ -219,7 +219,11 @@ export async function execute(this: IExecuteFunctions, index: number) {
 	const responseData = await pdfcoApiRequestWithJobCheck.call(this, '/v1/pdf/find', body);
 
 	if (body.inline && responseData.url) {
-		const response = await this.helpers.request(responseData.url);
+		const response = await this.helpers.httpRequest({
+			method: 'GET',
+			url: responseData.url,
+			json: false,
+		});
 		responseData.body = JSON.parse(response);
 	}
 
