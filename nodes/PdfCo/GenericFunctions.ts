@@ -5,7 +5,7 @@ import type {
 	ILoadOptionsFunctions,
 	JsonObject,
 	IHttpRequestMethods,
-	IRequestOptions,
+	IHttpRequestOptions,
 } from 'n8n-workflow';
 
 interface PdfcoCredentials {
@@ -31,15 +31,14 @@ interface PdfcoOAuth2ApiKeyCacheContext {
 }
 
 const PDFCO_OAUTH2_API_KEY_CACHE_PROPERTY = '__pdfcoOAuth2ApiKeyCache';
+const PDFCO_JOB_CHECK_INTERVAL_MS = 3000;
+const PDFCO_JOB_CHECK_MAX_DURATION_MS = 30 * 60 * 1000;
 
 import { NodeApiError } from 'n8n-workflow';
 import { PDFCO_CONSTANTS } from './constants';
 
-async function delay(
-	this: IHookFunctions | IExecuteFunctions | ILoadOptionsFunctions,
-	ms: number,
-): Promise<void> {
-	await pdfcoApiRequest.call(this, '/v1/delay', {}, 'GET', { val: ms });
+async function delay(ms: number): Promise<void> {
+	await new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 function getAuthenticationType(
@@ -120,7 +119,7 @@ export async function pdfcoApiRequest(
 					(credentials as PdfcoOAuth2Credentials).userInfoUrl,
 				)
 			: (credentials as PdfcoCredentials).apiKey;
-	let options: IRequestOptions = {
+	let options: IHttpRequestOptions = {
 		baseURL,
 		url: url,
 		headers: {
@@ -139,7 +138,7 @@ export async function pdfcoApiRequest(
 	}
 
 	try {
-		return await this.helpers.request(options);
+		return await this.helpers.httpRequest(options);
 	} catch (error) {
 		throw new NodeApiError(this.getNode(), error as JsonObject);
 	}
@@ -173,6 +172,7 @@ export async function pdfcoApiRequestWithJobCheck(
 	}
 
 	let jobCheckResp: any = { status: 'none' };
+	const startedAt = Date.now();
 
 	do {
 		// Check job response
@@ -189,7 +189,17 @@ export async function pdfcoApiRequestWithJobCheck(
 		}
 
 		if (jobCheckResp.status === 'working') {
-			await delay.call(this, 3000);
+			const elapsedMs = Date.now() - startedAt;
+
+			if (elapsedMs >= PDFCO_JOB_CHECK_MAX_DURATION_MS) {
+				throw new NodeApiError(this.getNode(), {
+					message: `PDF.co job ${mainRequestResp.jobId} did not finish within ${PDFCO_JOB_CHECK_MAX_DURATION_MS / 60000} minutes`,
+					jobId: mainRequestResp.jobId,
+					status: jobCheckResp.status,
+				} as JsonObject);
+			}
+
+			await delay(PDFCO_JOB_CHECK_INTERVAL_MS);
 		}
 	} while (jobCheckResp.status === 'working');
 
