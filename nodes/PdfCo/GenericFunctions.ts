@@ -5,7 +5,7 @@ import type {
 	ILoadOptionsFunctions,
 	JsonObject,
 	IHttpRequestMethods,
-	IRequestOptions,
+	IHttpRequestOptions,
 } from 'n8n-workflow';
 
 interface PdfcoCredentials {
@@ -120,7 +120,7 @@ export async function pdfcoApiRequest(
 					(credentials as PdfcoOAuth2Credentials).userInfoUrl,
 				)
 			: (credentials as PdfcoCredentials).apiKey;
-	let options: IRequestOptions = {
+	let options: IHttpRequestOptions = {
 		baseURL,
 		url: url,
 		headers: {
@@ -139,7 +139,7 @@ export async function pdfcoApiRequest(
 	}
 
 	try {
-		return await this.helpers.request(options);
+		return await this.helpers.httpRequest(options);
 	} catch (error) {
 		throw new NodeApiError(this.getNode(), error as JsonObject);
 	}

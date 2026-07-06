@@ -351,7 +351,11 @@ export async function execute(this: IExecuteFunctions, index: number) {
 	// If inline parameter specified and true, then fetch object from URL and add it to responseData with body as key
 	if (body.inline && responseData.url
 			&& convertType !== 'toTiff' && convertType !== 'toXls' && convertType !== 'toXlsx') {
-		const response = await this.helpers.request(responseData.url);
+		const response = await this.helpers.httpRequest({
+			method: 'GET',
+			url: responseData.url,
+			json: false,
+		});
 
 		if(convertType === 'toJpg' || convertType === 'toPng' || convertType === 'toWebp') {
 			responseData.body = JSON.parse(response);

@@ -28,17 +28,17 @@ export const description: INodeProperties[] = [
 		options: [
 			{
 				name: 'Page Numbers',
-				description: 'Split PDF Based on comma-separated indices of pages (or ranges)',
+				description: 'Split PDF based on comma-separated indices of pages (or ranges)',
 				value: 'pageNumber',
 			},
 			{
 				name: 'Search Text',
-				description: 'Split PDF Based on Text Search',
+				description: 'Split PDF based on text search',
 				value: 'searchText',
 			},
 			{
 				name: 'Barcode',
-				description: 'Split PDF Based on Barcode Search',
+				description: 'Split PDF based on barcode search',
 				value: 'barcode',
 			},
 		],
