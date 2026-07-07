@@ -22,10 +22,6 @@ interface PdfcoUserInfoResponse {
 	api_key?: string;
 }
 
-interface PdfcoOAuth2RequestOptions {
-	tokenExpiredStatusCode?: number;
-}
-
 interface PdfcoOAuth2ApiKeyCacheContext {
 	__pdfcoOAuth2ApiKeyCache?: Record<string, string>;
 }
@@ -37,8 +33,11 @@ const PDFCO_JOB_CHECK_MAX_DURATION_MS = 30 * 60 * 1000;
 import { NodeApiError } from 'n8n-workflow';
 import { PDFCO_CONSTANTS } from './constants';
 
-async function delay(ms: number): Promise<void> {
-	await new Promise((resolve) => setTimeout(resolve, ms));
+async function delay(
+	this: IHookFunctions | IExecuteFunctions | ILoadOptionsFunctions,
+	ms: number,
+): Promise<void> {
+	await pdfcoApiRequest.call(this, '/v1/delay', {}, 'GET', { val: ms });
 }
 
 function getAuthenticationType(
@@ -62,16 +61,11 @@ async function getApiKeyFromUserInfo(
 	let userInfo: PdfcoUserInfoResponse;
 
 	try {
-		userInfo = (await (this.helpers as any).requestOAuth2.call(
-			this,
-			'pdfcoOAuth2Api',
-			{
-				url: userInfoUrl,
-				method: 'GET',
-				json: true,
-			},
-			{ tokenExpiredStatusCode: 401 } as PdfcoOAuth2RequestOptions,
-		)) as PdfcoUserInfoResponse;
+		userInfo = (await this.helpers.httpRequestWithAuthentication.call(this, 'pdfcoOAuth2Api', {
+			url: userInfoUrl,
+			method: 'GET',
+			json: true,
+		})) as PdfcoUserInfoResponse;
 	} catch (error) {
 		throw new NodeApiError(
 			this.getNode(),
@@ -119,13 +113,14 @@ export async function pdfcoApiRequest(
 					(credentials as PdfcoOAuth2Credentials).userInfoUrl,
 				)
 			: (credentials as PdfcoCredentials).apiKey;
+	const credentialType = authentication === 'oAuth2' ? 'pdfcoOAuth2Api' : 'pdfcoApi';
 	let options: IHttpRequestOptions = {
 		baseURL,
 		url: url,
 		headers: {
 			'content-type': 'application/json',
-			'x-api-key': apiKey,
 			'user-agent': PDFCO_CONSTANTS.USER_AGENT,
+			...(authentication === 'oAuth2' ? { 'x-api-key': apiKey } : {}),
 		},
 		method,
 		qs,
@@ -138,7 +133,7 @@ export async function pdfcoApiRequest(
 	}
 
 	try {
-		return await this.helpers.httpRequest(options);
+		return await this.helpers.httpRequestWithAuthentication.call(this, credentialType, options);
 	} catch (error) {
 		throw new NodeApiError(this.getNode(), error as JsonObject);
 	}
@@ -199,7 +194,7 @@ export async function pdfcoApiRequestWithJobCheck(
 				} as JsonObject);
 			}
 
-			await delay(PDFCO_JOB_CHECK_INTERVAL_MS);
+			await delay.call(this, PDFCO_JOB_CHECK_INTERVAL_MS);
 		}
 	} while (jobCheckResp.status === 'working');
 
