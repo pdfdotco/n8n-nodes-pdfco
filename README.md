@@ -215,11 +215,8 @@ For detailed examples and workflow templates, visit our [documentation](https://
 ### 1.0.10
 - Updated PDF.co API requests to use n8n authenticated HTTP helpers instead of deprecated or manually authenticated request helpers
 - Replaced the deprecated OAuth2 request helper with `httpRequestWithAuthentication()` for OAuth user info lookups
-- Removed direct `setTimeout` usage from job polling to satisfy n8n community package security scan rules
-
-### 1.0.11
-- Switched job polling delay to n8n-workflow's `sleep` utility
+- Switched job polling delay to n8n-workflow's `sleep` utility to avoid restricted globals
 - Wrapped inline secondary download errors in `NodeApiError` so n8n shows node-aware error context
-- Added an end-to-end Usage example for the PDF Info operation
+- Added an end-to-end Usage example for the PDF Information & Form Fields operation
 - Simplified the API key credential field label
 
