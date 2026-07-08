@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.11 - 2026-07-07
+
+### Fixed
+
+- Switched PDF.co job polling delay to n8n-workflow's `sleep` utility.
+- Wrapped inline secondary downloads in `NodeApiError` for node-aware n8n UI errors.
+- Simplified the API key credential field label to `API Key`.
+
+### Documentation
+
+- Added an end-to-end PDF Info usage example to the README.
+
 ## 1.0.10 - 2026-07-07
 
 ### Fixed
