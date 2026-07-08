@@ -16,5 +16,20 @@
 				"url": "https://docs.pdf.co/integrations/n8n/getting-started"
 			}
 		]
-	}
+	},
+	"alias": [
+		"pdf",
+		"extract",
+		"ocr",
+		"invoice",
+		"scan",
+		"parse",
+		"parser",
+		"parsing",
+		"document",
+		"pdfco",
+		"pdf.co",
+		"split pdf",
+		"merge pdf"
+	]
 }
