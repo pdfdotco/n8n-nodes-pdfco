@@ -125,37 +125,6 @@ This node allows you to automate PDF processing tasks in your n8n workflows. Her
 - Extract data from PDFs to other formats
 - Manage and modify PDF documents programmatically
 
-### Example: Get PDF information from a public URL
-
-This example creates a simple workflow that reads metadata from a PDF file and returns the PDF.co result URL and extracted metadata.
-
-1. Add a **Manual Trigger** node.
-2. Add the **PDF.co API** node after the trigger.
-3. In the PDF.co node, configure:
-   - **Authentication**: `API Key`
-   - **Credential**: select your PDF.co API key credential
-   - **Action**: `PDF Information & Form Fields`
-   - **PDF URL**: `https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf`
-   - **Extract Fillable Fields**: `false`
-4. Execute the workflow.
-
-The node sends the URL to PDF.co and returns a JSON item similar to:
-
-```json
-{
-  "url": "https://pdf-temp-files.s3.amazonaws.com/.../result.json",
-  "body": {
-    "PageCount": 1,
-    "Encrypted": false,
-    "PasswordProtected": false,
-    "Title": "Dummy PDF file"
-  },
-  "duration": 123
-}
-```
-
-You can use the same pattern for other operations: choose the required **Action**, provide the source file URL or uploaded file URL, then pass the returned JSON fields to the next n8n node.
-
 For detailed examples and workflow templates, visit our [documentation](https://docs.pdf.co).
 
 ## Resources
@@ -211,15 +180,3 @@ For detailed examples and workflow templates, visit our [documentation](https://
 - Normalized Split PDF option descriptions to sentence case
 - Improved PDF.co job polling by using local polling delay instead of the `/v1/delay` API endpoint and adding a 30-minute timeout
 - Removed SSL certificate validation bypass from presigned upload requests
-
-### 1.0.10
-- Updated PDF.co API requests to use n8n authenticated HTTP helpers instead of deprecated or manually authenticated request helpers
-- Replaced the deprecated OAuth2 request helper with `httpRequestWithAuthentication()` for OAuth user info lookups
-- Removed direct `setTimeout` usage from job polling to satisfy n8n community package security scan rules
-
-### 1.0.11
-- Switched job polling delay to n8n-workflow's `sleep` utility
-- Wrapped inline secondary download errors in `NodeApiError` so n8n shows node-aware error context
-- Added an end-to-end Usage example for the PDF Info operation
-- Simplified the API key credential field label
-

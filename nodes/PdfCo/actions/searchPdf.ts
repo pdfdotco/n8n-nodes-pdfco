@@ -1,6 +1,5 @@
 import type { INodeProperties } from 'n8n-workflow';
-import { NodeApiError } from 'n8n-workflow';
-import type { IExecuteFunctions, IDataObject, JsonObject } from 'n8n-workflow';
+import type { IExecuteFunctions, IDataObject } from 'n8n-workflow';
 import {
 	pdfcoApiRequestWithJobCheck,
 	sanitizeProfiles,
@@ -220,16 +219,12 @@ export async function execute(this: IExecuteFunctions, index: number) {
 	const responseData = await pdfcoApiRequestWithJobCheck.call(this, '/v1/pdf/find', body);
 
 	if (body.inline && responseData.url) {
-		try {
-			const response = await this.helpers.httpRequest({
-				method: 'GET',
-				url: responseData.url,
-				json: false,
-			});
-			responseData.body = JSON.parse(response);
-		} catch (error) {
-			throw new NodeApiError(this.getNode(), error as JsonObject);
-		}
+		const response = await this.helpers.httpRequest({
+			method: 'GET',
+			url: responseData.url,
+			json: false,
+		});
+		responseData.body = JSON.parse(response);
 	}
 
 	return this.helpers.returnJsonArray(responseData);

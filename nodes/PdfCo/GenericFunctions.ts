@@ -30,11 +30,14 @@ const PDFCO_OAUTH2_API_KEY_CACHE_PROPERTY = '__pdfcoOAuth2ApiKeyCache';
 const PDFCO_JOB_CHECK_INTERVAL_MS = 3000;
 const PDFCO_JOB_CHECK_MAX_DURATION_MS = 30 * 60 * 1000;
 
-import { NodeApiError, sleep } from 'n8n-workflow';
+import { NodeApiError } from 'n8n-workflow';
 import { PDFCO_CONSTANTS } from './constants';
 
-async function delay(ms: number): Promise<void> {
-	await sleep(ms);
+async function delay(
+	this: IHookFunctions | IExecuteFunctions | ILoadOptionsFunctions,
+	ms: number,
+): Promise<void> {
+	await pdfcoApiRequest.call(this, '/v1/delay', {}, 'GET', { val: ms });
 }
 
 function getAuthenticationType(
@@ -191,7 +194,7 @@ export async function pdfcoApiRequestWithJobCheck(
 				} as JsonObject);
 			}
 
-			await delay(PDFCO_JOB_CHECK_INTERVAL_MS);
+			await delay.call(this, PDFCO_JOB_CHECK_INTERVAL_MS);
 		}
 	} while (jobCheckResp.status === 'working');
 

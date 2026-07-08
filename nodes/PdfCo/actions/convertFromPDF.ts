@@ -1,6 +1,5 @@
 import type { INodeProperties } from 'n8n-workflow';
-import { NodeApiError } from 'n8n-workflow';
-import type { IExecuteFunctions, IDataObject, JsonObject } from 'n8n-workflow';
+import type { IExecuteFunctions, IDataObject } from 'n8n-workflow';
 import {
 	pdfcoApiRequestWithJobCheck,
 	sanitizeProfiles,
@@ -352,20 +351,16 @@ export async function execute(this: IExecuteFunctions, index: number) {
 	// If inline parameter specified and true, then fetch object from URL and add it to responseData with body as key
 	if (body.inline && responseData.url
 			&& convertType !== 'toTiff' && convertType !== 'toXls' && convertType !== 'toXlsx') {
-		try {
-			const response = await this.helpers.httpRequest({
-				method: 'GET',
-				url: responseData.url,
-				json: false,
-			});
+		const response = await this.helpers.httpRequest({
+			method: 'GET',
+			url: responseData.url,
+			json: false,
+		});
 
-			if(convertType === 'toJpg' || convertType === 'toPng' || convertType === 'toWebp') {
-				responseData.body = JSON.parse(response);
-			} else {
-				responseData.body = response;
-			}
-		} catch (error) {
-			throw new NodeApiError(this.getNode(), error as JsonObject);
+		if(convertType === 'toJpg' || convertType === 'toPng' || convertType === 'toWebp') {
+			responseData.body = JSON.parse(response);
+		} else {
+			responseData.body = response;
 		}
 	}
 

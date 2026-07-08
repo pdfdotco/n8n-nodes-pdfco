@@ -12,7 +12,7 @@ export class PdfcoApi implements ICredentialType {
 	//documentationUrl = '<your-docs-url>';
 	properties: INodeProperties[] = [
 		{
-			displayName: 'API Key',
+			displayName: 'Enter your PDF.co API Key',
 			name: 'apiKey',
 			type: 'string',
 			default: '',
