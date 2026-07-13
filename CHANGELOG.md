@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.11 - 2026-07-13
+
+### Added
+
+- Added PDF.co search aliases to improve node discoverability in n8n Connect.
+
 ## 1.0.10 - 2026-07-07
 
 ### Fixed
