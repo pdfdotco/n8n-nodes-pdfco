@@ -27,6 +27,7 @@ export const descriptions: INodeTypeDescription = {
 	name: 'PDFco Api',
 	description:
 		'Generate PDF, extract data from PDF, split PDF, merge PDF, convert PDF. Fill PDF forms, add text and images to pdf and much more with pdf.co!',
+	usableAsTool: true,
 	defaults: {
 		name: 'PDFco API',
 	},
