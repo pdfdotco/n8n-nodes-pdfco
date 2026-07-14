@@ -22,7 +22,9 @@ import * as makePdfSearchable from './actions/makePdfSearchable';
 import * as uploadFile from './actions/uploadFile';
 import { ActionConstants } from './GenericFunctions';
 
-export const descriptions: INodeTypeDescription = {
+// `usableAsTool` exists at runtime in n8n but isn't in the older n8n-workflow
+// type definitions this package builds against, so we widen the type locally.
+export const descriptions: INodeTypeDescription & { usableAsTool?: boolean } = {
 	displayName: 'PDF.co API',
 	name: 'PDFco Api',
 	description:
