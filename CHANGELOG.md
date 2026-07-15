@@ -1,10 +1,11 @@
 # Changelog
 
-## 1.0.11 - 2026-07-13
+## 1.0.11 - 2026-07-15
 
 ### Added
 
 - Added PDF.co search aliases to improve node discoverability in n8n Connect.
+- Added AI Agent tool support for the PDF.co node on n8n 1.71.0+; older instances require `N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE=true` ([#12](https://github.com/pdfdotco/n8n-nodes-pdfco/pull/12)).
 
 ## 1.0.10 - 2026-07-07
 
