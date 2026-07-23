@@ -38,20 +38,20 @@ export const descriptions: INodeTypeDescription = {
 	outputs: ['main'],
 	credentials: [
 		{
-			name: 'pdfcoApi',
-			required: true,
-			displayOptions: {
-				show: {
-					authentication: ['apiKey'],
-				},
-			},
-		},
-		{
 			name: 'pdfcoOAuth2Api',
 			required: true,
 			displayOptions: {
 				show: {
 					authentication: ['oAuth2'],
+				},
+			},
+		},
+		{
+			name: 'pdfcoApi',
+			required: true,
+			displayOptions: {
+				show: {
+					authentication: ['apiKey'],
 				},
 			},
 		},
