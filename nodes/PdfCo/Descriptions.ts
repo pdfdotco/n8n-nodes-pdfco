@@ -64,15 +64,15 @@ export const descriptions: INodeTypeDescription = {
 			noDataExpression: true,
 			options: [
 				{
-					name: 'API Key',
-					value: 'apiKey',
-				},
-				{
 					name: 'OAuth2',
 					value: 'oAuth2',
 				},
+				{
+					name: 'API Key',
+					value: 'apiKey',
+				},
 			],
-			default: 'apiKey',
+			default: 'oAuth2',
 		},
 		{
 			displayName: 'Action',
