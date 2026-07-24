@@ -1,4 +1,5 @@
-import type { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
+import type { IExecuteFunctions, INodeExecutionData, JsonObject } from 'n8n-workflow';
+import { NodeApiError } from 'n8n-workflow';
 
 import { ActionConstants } from './../GenericFunctions';
 
@@ -69,11 +70,11 @@ export async function router(this: IExecuteFunctions): Promise<INodeExecutionDat
 			} else if (action === ActionConstants.UploadFile) {
 				operationResult.push(...(await uploadFile.execute.call(this, i)));
 			}
-		} catch (err) {
+		} catch (error) {
 			if (this.continueOnFail()) {
-				operationResult.push({ json: this.getInputData(i)[0].json, error: err });
+				operationResult.push({ json: this.getInputData(i)[0].json, error });
 			} else {
-				throw err;
+				throw new NodeApiError(this.getNode(), error as JsonObject);
 			}
 		}
 	}
