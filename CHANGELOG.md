@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.13 - 2026-07-24
+
+### Fixed
+
+- Masked the OAuth2 client secret in the credential UI.
+- Wrapped execution failures in n8n node-aware errors so they retain node context in the editor.
+
 ## 1.0.12 - 2026-07-23
 
 ### Changed
