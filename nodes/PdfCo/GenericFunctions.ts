@@ -245,22 +245,15 @@ export function sanitizeProfiles(data: IDataObject): void {
 		return;
 	}
 
-	try {
-		// Wrap profiles in curly braces if they are not already
-		let sanitized = profilesValue;
-		if (!sanitized.startsWith('{')) {
-			sanitized = `{ ${sanitized}`;
-		}
-		if (!sanitized.endsWith('}')) {
-			sanitized = `${sanitized} }`;
-		}
-		data.profiles = sanitized;
-	} catch (error) {
-		throw new Error(
-			'Invalid JSON in Profiles. Check https://docs.pdf.co/api-reference/profiles/ or contact support@pdf.co for help. ' +
-				(error as Error).message,
-		);
+	// Wrap profiles in curly braces if they are not already
+	let sanitized = profilesValue;
+	if (!sanitized.startsWith('{')) {
+		sanitized = `{ ${sanitized}`;
 	}
+	if (!sanitized.endsWith('}')) {
+		sanitized = `${sanitized} }`;
+	}
+	data.profiles = sanitized;
 }
 
 export class ActionConstants {
