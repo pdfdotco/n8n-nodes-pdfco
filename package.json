@@ -1,7 +1,7 @@
 {
   "name": "n8n-nodes-pdfco",
   "version": "1.0.13",
-  "description": "Pdf.co nodes for n8n",
+  "description": "Extract, convert, generate, and edit PDFs with OCR and AI-powered document tools.",
   "keywords": [
     "n8n-community-node-package"
   ],

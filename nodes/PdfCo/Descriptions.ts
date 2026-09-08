@@ -23,13 +23,13 @@ import * as uploadFile from './actions/uploadFile';
 import { ActionConstants } from './GenericFunctions';
 
 export const descriptions: INodeTypeDescription = {
-	displayName: 'PDF.co API',
+	displayName: 'PDF.co',
 	name: 'PDFco Api',
 	description:
-		'Generate PDF, extract data from PDF, split PDF, merge PDF, convert PDF. Fill PDF forms, add text and images to pdf and much more with pdf.co!',
+		'Automate document workflows with OCR, AI invoice parsing, data extraction, conversion, form filling, merging/splitting, and barcode processing. Ideal for invoices, forms, and scanned files.',
 	usableAsTool: true,
 	defaults: {
-		name: 'PDFco API',
+		name: 'PDF.co',
 	},
 	group: ['transform'],
 	// eslint-disable-next-line n8n-nodes-base/node-class-description-icon-not-svg
