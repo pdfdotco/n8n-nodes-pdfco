@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.14 - 2026-09-09
+
+### Changed
+
+- Renamed the node from "PDF.co API" to "PDF.co" in the nodes panel and as the default node label.
+- Refreshed the node and npm package descriptions to describe the OCR, AI invoice parsing, extraction, conversion, form filling, merge/split, and barcode capabilities ([#19](https://github.com/pdfdotco/n8n-nodes-pdfco/pull/19)).
+
 ## 1.0.13 - 2026-07-24
 
 ### Fixed
