@@ -130,7 +130,7 @@ This node allows you to automate PDF processing tasks in your n8n workflows. Her
 This example creates a simple workflow that reads metadata from a PDF file and returns the PDF.co result URL and extracted metadata.
 
 1. Add a **Manual Trigger** node.
-2. Add the **PDF.co API** node after the trigger.
+2. Add the **PDF.co** node after the trigger.
 3. In the PDF.co node, configure:
    - **Authentication**: `API Key`
    - **Credential**: select your PDF.co API key credential
