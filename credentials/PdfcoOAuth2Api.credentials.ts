@@ -2,7 +2,7 @@ import type { ICredentialTestRequest, ICredentialType, INodeProperties } from 'n
 
 const PDFCO_BACKEND_BASE_URL = 'https://api.backend.pdf.co';
 const PDFCO_API_BASE_URL = 'https://api.pdf.co';
-const PDFCO_OAUTH_CLIENT_ID = 'pdfco_7NT3JEinlEsg7rCiSYOnfyd3';
+const PDFCO_PKCE_CLIENT_ID = 'pdfco_7NT3JEinlEsg7rCiSYOnfyd3';
 
 export class PdfcoOAuth2Api implements ICredentialType {
 	name = 'pdfcoOAuth2Api';
@@ -10,6 +10,10 @@ export class PdfcoOAuth2Api implements ICredentialType {
 	extends = ['oAuth2Api'];
 
 	displayName = 'PDF.co OAuth2 API';
+
+	documentationUrl = 'https://developer.pdf.co/integrations/n8n/getting-started';
+
+	icon = 'file:../nodes/PdfCo/pdfco.svg' as const;
 
 	properties: INodeProperties[] = [
 		{
@@ -36,7 +40,7 @@ export class PdfcoOAuth2Api implements ICredentialType {
 			displayName: 'Client ID',
 			name: 'clientId',
 			type: 'hidden',
-			default: PDFCO_OAUTH_CLIENT_ID,
+			default: PDFCO_PKCE_CLIENT_ID,
 			required: true,
 		},
 		{

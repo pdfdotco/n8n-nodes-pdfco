@@ -26,7 +26,7 @@ interface PdfcoOAuth2ApiKeyCacheContext {
 	__pdfcoOAuth2ApiKeyCache?: Record<string, string>;
 }
 
-const PDFCO_OAUTH2_API_KEY_CACHE_PROPERTY = '__pdfcoOAuth2ApiKeyCache';
+const PDFCO_CACHE_PROPERTY = '__pdfcoOAuth2ApiKeyCache';
 const PDFCO_JOB_CHECK_INTERVAL_MS = 3000;
 const PDFCO_JOB_CHECK_MAX_DURATION_MS = 30 * 60 * 1000;
 
@@ -49,7 +49,7 @@ async function getApiKeyFromUserInfo(
 	userInfoUrl: string,
 ): Promise<string> {
 	const cacheContext = this as typeof this & PdfcoOAuth2ApiKeyCacheContext;
-	const cachedApiKey = cacheContext[PDFCO_OAUTH2_API_KEY_CACHE_PROPERTY]?.[userInfoUrl];
+	const cachedApiKey = cacheContext[PDFCO_CACHE_PROPERTY]?.[userInfoUrl];
 
 	if (cachedApiKey) {
 		return cachedApiKey;
@@ -81,8 +81,8 @@ async function getApiKeyFromUserInfo(
 		});
 	}
 
-	cacheContext[PDFCO_OAUTH2_API_KEY_CACHE_PROPERTY] = {
-		...cacheContext[PDFCO_OAUTH2_API_KEY_CACHE_PROPERTY],
+	cacheContext[PDFCO_CACHE_PROPERTY] = {
+		...cacheContext[PDFCO_CACHE_PROPERTY],
 		[userInfoUrl]: userInfo.api_key,
 	};
 

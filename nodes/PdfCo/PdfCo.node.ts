@@ -2,7 +2,6 @@ import {
 	IExecuteFunctions,
 	INodeType,
 	INodeTypeDescription,
-	INodeTypeBaseDescription,
 	ILoadOptionsFunctions
 } from 'n8n-workflow';
 
@@ -12,14 +11,12 @@ import { loadResource } from './GenericFunctions';
 
 export class PdfCo implements INodeType {
 
-	description: INodeTypeDescription;
-
-	constructor(baseDescription: INodeTypeBaseDescription) {
-		this.description = {
-			...baseDescription,
-			...descriptions
-		};
-	}
+	description: INodeTypeDescription = {
+		...descriptions,
+		icon: 'file:pdfco.svg',
+		subtitle: '={{$parameter["operation"]}}',
+		usableAsTool: true,
+	};
 
 	methods = {
 		loadOptions: {

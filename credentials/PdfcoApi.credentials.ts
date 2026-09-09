@@ -9,7 +9,8 @@ import { PDFCO_CONSTANTS } from '../nodes/PdfCo/constants';
 export class PdfcoApi implements ICredentialType {
 	name = 'pdfcoApi';
 	displayName = 'PDF.co API';
-	//documentationUrl = '<your-docs-url>';
+	documentationUrl = 'https://developer.pdf.co/integrations/n8n/getting-started';
+	icon = 'file:../nodes/PdfCo/pdfco.svg' as const;
 	properties: INodeProperties[] = [
 		{
 			displayName: 'API Key',

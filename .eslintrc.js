@@ -46,6 +46,8 @@ module.exports = {
 				'n8n-nodes-base/node-execute-block-missing-continue-on-fail': 'off',
 				'n8n-nodes-base/node-resource-description-filename-against-convention': 'off',
 				'n8n-nodes-base/node-param-fixed-collection-type-unsorted-items': 'off',
+				// The pinned plugin (1.16.1) expects the old docs URL; n8n's scanner (1.16.7) enforces the current wording.
+				'n8n-nodes-base/node-param-description-wrong-for-dynamic-options': 'off',
 			},
 		},
 	],

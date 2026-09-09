@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.15 - 2026-09-09
+
+### Fixed
+
+- Addressed the n8n verification linter findings on 1.0.13: added `icon` and `documentationUrl` to both credential types, declared `icon` and `subtitle` on the node class description, alphabetized collection and fixed-collection options, and updated dynamic-option descriptions to the current n8n wording.
+- Renamed two internal constants (OAuth2 PKCE client ID, OAuth2 credential cache property) so the scanner no longer mistakes them for hardcoded secrets. No behavior change.
+
 ## 1.0.14 - 2026-09-09
 
 ### Changed

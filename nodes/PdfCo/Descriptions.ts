@@ -32,8 +32,6 @@ export const descriptions: INodeTypeDescription = {
 		name: 'PDF.co',
 	},
 	group: ['transform'],
-	// eslint-disable-next-line n8n-nodes-base/node-class-description-icon-not-svg
-	icon: 'file:pdfco.svg',
 	inputs: ['main'],
 	outputs: ['main'],
 	credentials: [
@@ -227,6 +225,5 @@ export const descriptions: INodeTypeDescription = {
 		...makePdfSearchable.description,
 		...uploadFile.description,
 	],
-	subtitle: '={{$parameter["operation"]}}',
 	version: [1, 1.1],
 };
