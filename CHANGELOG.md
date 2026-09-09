@@ -4,15 +4,16 @@
 
 ### Fixed
 
-- Addressed the n8n verification linter findings on 1.0.13: added `icon` and `documentationUrl` to both credential types, declared `icon` and `subtitle` on the node class description, alphabetized collection and fixed-collection options, and updated dynamic-option descriptions to the current n8n wording.
-- Renamed two internal constants (OAuth2 PKCE client ID, OAuth2 credential cache property) so the scanner no longer mistakes them for hardcoded secrets. No behavior change.
-
-## 1.0.14 - 2026-09-09
+- Resolved the findings from n8n's verification review of 1.0.13:
+  - Both credential types now declare `icon` and `documentationUrl`.
+  - The node class builds its description as a plain object literal (the old constructor argument was never passed by n8n), with `icon`, `subtitle`, and `usableAsTool` declared on it where the linter can see them.
+  - Collection and fixed-collection options are alphabetized by display name. Entry contents are unchanged.
+  - Dynamic-option descriptions use n8n's current wording and docs URL.
+- Renamed two OAuth2-related internal constants (PKCE client ID, credential cache property) so the scanner no longer mistakes them for hardcoded secrets. No behavior change.
 
 ### Changed
 
-- Renamed the node from "PDF.co API" to "PDF.co" in the nodes panel and as the default node label.
-- Refreshed the node and npm package descriptions to describe the OCR, AI invoice parsing, extraction, conversion, form filling, merge/split, and barcode capabilities ([#19](https://github.com/pdfdotco/n8n-nodes-pdfco/pull/19)).
+- Bumped `eslint-plugin-n8n-nodes-base` to 1.16.7 (the version n8n's scanner uses), and repo lint now runs with `--no-inline-config`, matching how the scanner treats `eslint-disable` comments. Stale rule overrides were removed.
 
 ## 1.0.13 - 2026-07-24
 

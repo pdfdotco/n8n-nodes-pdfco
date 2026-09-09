@@ -11,6 +11,8 @@ import { loadResource } from './GenericFunctions';
 
 export class PdfCo implements INodeType {
 
+	// n8n's verification linter only inspects the object literal on the class itself,
+	// so the properties it checks for are declared here rather than in Descriptions.ts.
 	description: INodeTypeDescription = {
 		...descriptions,
 		icon: 'file:pdfco.svg',
