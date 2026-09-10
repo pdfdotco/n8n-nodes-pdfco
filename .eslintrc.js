@@ -34,7 +34,7 @@ module.exports = {
 			plugins: ['eslint-plugin-n8n-nodes-base'],
 			extends: ['plugin:n8n-nodes-base/credentials'],
 			rules: {
-				'n8n-nodes-base/cred-class-field-documentation-url-missing': 'off',
+				// Expects the n8n-monorepo slug format; community nodes use full URLs. n8n's scanner turns this off too.
 				'n8n-nodes-base/cred-class-field-documentation-url-miscased': 'off',
 			},
 		},
@@ -43,9 +43,9 @@ module.exports = {
 			plugins: ['eslint-plugin-n8n-nodes-base'],
 			extends: ['plugin:n8n-nodes-base/nodes'],
 			rules: {
-				'n8n-nodes-base/node-execute-block-missing-continue-on-fail': 'off',
-				'n8n-nodes-base/node-resource-description-filename-against-convention': 'off',
-				'n8n-nodes-base/node-param-fixed-collection-type-unsorted-items': 'off',
+				// The node type name is 'PDFco Api' (kept for workflow compatibility), so the expected filename
+				// would be 'PDFco Api.node.ts'. n8n's scanner reports this too and has accepted it since 1.0.11.
+				'n8n-nodes-base/node-filename-against-convention': 'off',
 			},
 		},
 	],

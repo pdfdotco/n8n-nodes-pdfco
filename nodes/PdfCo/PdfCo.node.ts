@@ -2,7 +2,6 @@ import {
 	IExecuteFunctions,
 	INodeType,
 	INodeTypeDescription,
-	INodeTypeBaseDescription,
 	ILoadOptionsFunctions
 } from 'n8n-workflow';
 
@@ -12,14 +11,14 @@ import { loadResource } from './GenericFunctions';
 
 export class PdfCo implements INodeType {
 
-	description: INodeTypeDescription;
-
-	constructor(baseDescription: INodeTypeBaseDescription) {
-		this.description = {
-			...baseDescription,
-			...descriptions
-		};
-	}
+	// n8n's verification linter only inspects the object literal on the class itself,
+	// so the properties it checks for are declared here rather than in Descriptions.ts.
+	description: INodeTypeDescription = {
+		...descriptions,
+		icon: 'file:pdfco.svg',
+		subtitle: '={{$parameter["operation"]}}',
+		usableAsTool: true,
+	};
 
 	methods = {
 		loadOptions: {

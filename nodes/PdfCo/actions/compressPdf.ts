@@ -34,6 +34,14 @@ export const description: INodeProperties[] = [
 		},
 		options: [
 			{
+				displayName: 'Custom Compression Configuration',
+				name: 'config',
+				type: 'json',
+				default: '',
+				description: 'The custom compression configuration to use',
+				hint: 'Define custom compression configuration. See PDF.co <a href="https://docs.pdf.co/integrations/n8n/compress-pdf#custom-compression-configuration" target="_blank">PDF Compression Docs</a> for supported options.',
+			},
+			{
 				displayName: 'File Name',
 				name: 'name',
 				type: 'string',
@@ -42,13 +50,23 @@ export const description: INodeProperties[] = [
 				hint: `Enter the name of the output file. If not specified, the original file name is used.`,
 			},
 			{
-				displayName: 'Webhook URL',
-				name: 'callback',
-				type: 'string', // You can also use "url" if you want built-in URL validation.
+				displayName: 'HTTP Password',
+				name: 'httppassword',
+				type: 'string',
+				typeOptions: {
+					password: true,
+				},
 				default: '',
-				placeholder: 'https://example.com/callback',
-				description: 'The callback URL or Webhook used to receive the output data',
-				hint: 'The callback URL or Webhook used to receive the output data.',
+				description: 'The HTTP password if required to access source URL',
+				hint: 'The HTTP password if required to access source URL',
+			},
+			{
+				displayName: 'HTTP Username',
+				name: 'httpusername',
+				type: 'string',
+				default: '',
+				description: 'The HTTP username if required to access source URL',
+				hint: 'The HTTP username if required to access source URL',
 			},
 			{
 				displayName: 'Output Links Expiration (In Minutes)',
@@ -69,31 +87,13 @@ export const description: INodeProperties[] = [
 				hint: 'The password of the password-protected PDF file',
 			},
 			{
-				displayName: 'HTTP Username',
-				name: 'httpusername',
-				type: 'string',
+				displayName: 'Webhook URL',
+				name: 'callback',
+				type: 'string', // You can also use "url" if you want built-in URL validation.
 				default: '',
-				description: 'The HTTP username if required to access source URL',
-				hint: 'The HTTP username if required to access source URL',
-			},
-			{
-				displayName: 'HTTP Password',
-				name: 'httppassword',
-				type: 'string',
-				typeOptions: {
-					password: true,
-				},
-				default: '',
-				description: 'The HTTP password if required to access source URL',
-				hint: 'The HTTP password if required to access source URL',
-			},
-			{
-				displayName: 'Custom Compression Configuration',
-				name: 'config',
-				type: 'json',
-				default: '',
-				description: 'The custom compression configuration to use',
-				hint: 'Define custom compression configuration. See PDF.co <a href="https://docs.pdf.co/integrations/n8n/compress-pdf#custom-compression-configuration" target="_blank">PDF Compression Docs</a> for supported options.',
+				placeholder: 'https://example.com/callback',
+				description: 'The callback URL or Webhook used to receive the output data',
+				hint: 'The callback URL or Webhook used to receive the output data.',
 			},
 		],
 	},

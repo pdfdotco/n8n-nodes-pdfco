@@ -12,7 +12,7 @@ const commonFields = {
 	name: {
 		displayName: 'File Name',
 		name: 'name',
-		type: 'string' as const,
+		type: 'string',
 		default: '',
 		description: 'Custom name for the output file. If empty, uses default file name.',
 		hint: 'Custom name for the output file. If empty, uses default file name.',
@@ -20,7 +20,7 @@ const commonFields = {
 	pages: {
 		displayName: 'Pages',
 		name: 'pages',
-		type: 'string' as const,
+		type: 'string',
 		default: '',
 		placeholder: '0',
 		hint: `Comma-separated list of page indices (or ranges) to process. Leave empty for all pages. First page is 0 (zero). Example: '0,1-2,5-'.`,
@@ -28,7 +28,7 @@ const commonFields = {
 	inline: {
 		displayName: 'Inline',
 		name: 'inline',
-		type: 'boolean' as const,
+		type: 'boolean',
 		default: true,
 		description: 'Whether to return the output in the response',
 		hint: `Whether to return the output in the response`,
@@ -36,7 +36,7 @@ const commonFields = {
 	rect: {
 		displayName: 'Extraction Region',
 		name: 'rect',
-		type: 'string' as const,
+		type: 'string',
 		default: '',
 		placeholder: '51.8, 114.8, 235.5, 204.0',
 		description: 'The region of the document to extract',
@@ -45,7 +45,7 @@ const commonFields = {
 	callback: {
 		displayName: 'Webhook URL',
 		name: 'callback',
-		type: 'string' as const,
+		type: 'string',
 		default: '',
 		placeholder: 'https://example.com/callback',
 		description: 'The callback URL or Webhook used to receive the output data',
@@ -54,14 +54,14 @@ const commonFields = {
 	expiration: {
 		displayName: 'Output Links Expiration (In Minutes)',
 		name: 'expiration',
-		type: 'number' as const,
+		type: 'number',
 		default: 60,
 		description: 'The expiration time of the output links',
 	},
 	httpusername: {
 		displayName: 'HTTP Username',
 		name: 'httpusername',
-		type: 'string' as const,
+		type: 'string',
 		default: '',
 		description: 'The HTTP username if required to access source URL',
 		hint: `The HTTP username if required to access source URL`,
@@ -69,7 +69,7 @@ const commonFields = {
 	httppassword: {
 		displayName: 'HTTP Password',
 		name: 'httppassword',
-		type: 'string' as const,
+		type: 'string',
 		typeOptions: {
 			password: true,
 		},
@@ -80,7 +80,7 @@ const commonFields = {
 	profiles: {
 		displayName: 'Custom Profiles',
 		name: 'profiles',
-		type: 'string' as const,
+		type: 'string',
 		default: '',
 		placeholder: `{ 'outputDataFormat': 'base64' }`,
 		hint: `Use JSON to customize PDF processing with options like output resolution, OCR settings, and more. Check our <a href="https://docs.pdf.co/integrations/n8n/convert-from-pdf#custom-profiles" target="_blank">Custom Profile Guide</a> to see all available parameters for your current operation.`,
@@ -88,19 +88,19 @@ const commonFields = {
 	lang: {
 		displayName: 'OCR Language Name or ID',
 		name: 'lang',
-		type: 'options' as const,
+		type: 'options',
 		typeOptions: {
 			loadOptionsMethod: 'getLanguages',
 		},
 		default: '',
 		placeholder: 'English',
 		description:
-			'The language of the OCR for Scanned Documents. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>.'
+			'The language of the OCR for Scanned Documents. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.'
 	},
 	lineGrouping: {
 		displayName: 'Line Grouping',
 		name: 'lineGrouping',
-		type: 'options' as const,
+		type: 'options',
 		options: [
 			{
 				name: 'Group by Rows',
@@ -124,20 +124,20 @@ const commonFields = {
 	unwrap: {
 		displayName: 'Unwrap',
 		name: 'unwrap',
-		type: 'boolean' as const,
+		type: 'boolean',
 		default: false,
 		description:
 			'Whether to unwrap lines into a single line within table cells when lineGrouping provided',
 		hint: `Whether to unwrap lines into a single line within table cells when lineGrouping provided`,
 	},
-};
+} satisfies Record<string, INodeProperties>;
 
 // Helper function to create advanced options collection
 function createAdvancedOptions(name: string, convertTypes: string[], fields: string[]): INodeProperties {
 	return {
 		displayName: 'Advanced Options',
 		name,
-		type: 'collection' as const,
+		type: 'collection',
 		placeholder: 'Add Option',
 		default: {},
 		displayOptions: {

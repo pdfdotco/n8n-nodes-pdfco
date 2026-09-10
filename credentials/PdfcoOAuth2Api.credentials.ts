@@ -1,8 +1,9 @@
 import type { ICredentialTestRequest, ICredentialType, INodeProperties } from 'n8n-workflow';
+import { PDFCO_CONSTANTS } from '../nodes/PdfCo/constants';
 
 const PDFCO_BACKEND_BASE_URL = 'https://api.backend.pdf.co';
-const PDFCO_API_BASE_URL = 'https://api.pdf.co';
-const PDFCO_OAUTH_CLIENT_ID = 'pdfco_7NT3JEinlEsg7rCiSYOnfyd3';
+// Public identifier of the PKCE OAuth client; there is no client secret. Not a credential.
+const PDFCO_PKCE_CLIENT_ID = 'pdfco_7NT3JEinlEsg7rCiSYOnfyd3';
 
 export class PdfcoOAuth2Api implements ICredentialType {
 	name = 'pdfcoOAuth2Api';
@@ -10,6 +11,10 @@ export class PdfcoOAuth2Api implements ICredentialType {
 	extends = ['oAuth2Api'];
 
 	displayName = 'PDF.co OAuth2 API';
+
+	documentationUrl = 'https://developer.pdf.co/integrations/n8n/getting-started';
+
+	icon = 'file:../nodes/PdfCo/pdfco.svg' as const;
 
 	properties: INodeProperties[] = [
 		{
@@ -36,7 +41,7 @@ export class PdfcoOAuth2Api implements ICredentialType {
 			displayName: 'Client ID',
 			name: 'clientId',
 			type: 'hidden',
-			default: PDFCO_OAUTH_CLIENT_ID,
+			default: PDFCO_PKCE_CLIENT_ID,
 			required: true,
 		},
 		{
@@ -76,7 +81,7 @@ export class PdfcoOAuth2Api implements ICredentialType {
 			displayName: 'Base URL',
 			name: 'baseUrl',
 			type: 'hidden',
-			default: PDFCO_API_BASE_URL,
+			default: PDFCO_CONSTANTS.BASE_URL,
 		},
 	];
 

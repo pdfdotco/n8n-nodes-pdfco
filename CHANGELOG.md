@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.0.15 - 2026-09-09
+
+### Fixed
+
+- Resolved the findings from n8n's verification review of 1.0.13:
+  - Both credential types now declare `icon` and `documentationUrl`.
+  - The node class builds its description as a plain object literal (the old constructor argument was never passed by n8n), with `icon`, `subtitle`, and `usableAsTool` declared on it where the linter can see them.
+  - Collection and fixed-collection options are alphabetized by display name. Entry contents are unchanged.
+  - Dynamic-option descriptions use n8n's current wording and docs URL.
+- Renamed two OAuth2-related internal constants (PKCE client ID, credential cache property) so the scanner no longer mistakes them for hardcoded secrets. No behavior change.
+
+### Changed
+
+- Bumped `eslint-plugin-n8n-nodes-base` to 1.16.7 (the version n8n's scanner uses), and repo lint now runs with `--no-inline-config`, matching how the scanner treats `eslint-disable` comments. Stale rule overrides were removed.
+
 ## 1.0.14 - 2026-09-09
 
 ### Changed

@@ -1,4 +1,3 @@
-/* eslint-disable n8n-nodes-base/node-filename-against-convention */
 import { INodeTypeDescription } from 'n8n-workflow';
 
 import * as aiInvoiceParse from './actions/aiInvoiceParser';
@@ -27,13 +26,10 @@ export const descriptions: INodeTypeDescription = {
 	name: 'PDFco Api',
 	description:
 		'Automate document workflows with OCR, AI invoice parsing, data extraction, conversion, form filling, merging/splitting, and barcode processing. Ideal for invoices, forms, and scanned files.',
-	usableAsTool: true,
 	defaults: {
 		name: 'PDF.co',
 	},
 	group: ['transform'],
-	// eslint-disable-next-line n8n-nodes-base/node-class-description-icon-not-svg
-	icon: 'file:pdfco.svg',
 	inputs: ['main'],
 	outputs: ['main'],
 	credentials: [
@@ -227,6 +223,5 @@ export const descriptions: INodeTypeDescription = {
 		...makePdfSearchable.description,
 		...uploadFile.description,
 	],
-	subtitle: '={{$parameter["operation"]}}',
 	version: [1, 1.1],
 };
