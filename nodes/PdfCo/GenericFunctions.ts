@@ -234,6 +234,20 @@ function cleanUpResponse(data: any): any {
 	return data;
 }
 
+/**
+ * Coerce a user-supplied parameter to a string for API fields that the PDF.co
+ * API defines as `string`. n8n hands expression results to the node in their
+ * original type (a number, boolean, etc.), so `{{ $json.invoiceNo }}` resolving
+ * to 12345 would otherwise be sent as a JSON number and rejected by the API.
+ * Returns undefined for undefined, null or empty string so callers can skip the field.
+ */
+export function toStringParam(value: unknown): string | undefined {
+	if (value === undefined || value === null || value === '') {
+		return undefined;
+	}
+	return String(value);
+}
+
 export function sanitizeProfiles(data: IDataObject): void {
 	// Convert profiles to a trimmed string (or empty string if not provided)
 	const profilesValue = data.profiles ? String(data.profiles).trim() : '';

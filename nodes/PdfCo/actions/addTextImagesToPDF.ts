@@ -3,6 +3,7 @@ import type { IExecuteFunctions, IDataObject } from 'n8n-workflow';
 import {
 	pdfcoApiRequestWithJobCheck,
 	sanitizeProfiles,
+	toStringParam,
 	ActionConstants,
 } from '../GenericFunctions';
 
@@ -343,7 +344,8 @@ export async function execute(this: IExecuteFunctions, index: number) {
 		const lstAnnotations = [] as IDataObject[];
 		for (const entry of annotationsMetadata) {
 			// Access each individual field
-			const text = entry?.text as string;
+			// The API expects `text` as a string; n8n may pass a number from an expression.
+			const text = toStringParam(entry?.text) ?? '';
 			const x = entry.x as number;
 			const y = entry.y as number;
 

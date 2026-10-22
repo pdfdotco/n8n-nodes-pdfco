@@ -3,6 +3,7 @@ import type { IExecuteFunctions, IDataObject } from 'n8n-workflow';
 import {
 	pdfcoApiRequestWithJobCheck,
 	sanitizeProfiles,
+	toStringParam,
 	ActionConstants,
 } from '../GenericFunctions';
 
@@ -188,8 +189,10 @@ export async function execute(this: IExecuteFunctions, index: number) {
 
 			let itmAnnotation: any = { fieldName };
 
-			const text = entry.text as string | undefined;
-			if (text) itmAnnotation.text = text;
+			// The API expects `text` as a string; coerce so numeric/boolean expression
+			// results (and values like 0 or false) are sent correctly.
+			const text = toStringParam(entry.text);
+			if (text !== undefined) itmAnnotation.text = text;
 
 			const pages = entry.pages as string | undefined;
 			if (pages) itmAnnotation.pages = pages;
