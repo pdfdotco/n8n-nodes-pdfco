@@ -360,7 +360,9 @@ export async function execute(this: IExecuteFunctions, index: number) {
 			});
 
 			if(convertType === 'toJpg' || convertType === 'toPng' || convertType === 'toWebp') {
-				responseData.body = JSON.parse(response);
+				// n8n's httpRequest helper may already parse a JSON response based on its
+				// content-type even with `json: false`; only parse when a string came back.
+				responseData.body = typeof response === 'string' ? JSON.parse(response) : response;
 			} else {
 				responseData.body = response;
 			}

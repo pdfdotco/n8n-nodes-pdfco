@@ -3,6 +3,7 @@ import type { IExecuteFunctions, IDataObject } from 'n8n-workflow';
 import {
 	pdfcoApiRequestWithJobCheck,
 	sanitizeProfiles,
+	toStringParam,
 	ActionConstants,
 } from '../GenericFunctions';
 
@@ -309,7 +310,8 @@ export const description: INodeProperties[] = [
 ];
 
 export async function execute(this: IExecuteFunctions, index: number) {
-	const value = this.getNodeParameter('value', index) as string;
+	// Barcode values are often numeric (EAN, SKU, order numbers); the API expects a string.
+	const value = toStringParam(this.getNodeParameter('value', index));
 	const type = this.getNodeParameter('type', index) as string;
 
 	const advancedOptions = this.getNodeParameter('advancedOptions', index) as IDataObject;

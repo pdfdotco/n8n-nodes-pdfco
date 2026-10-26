@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.16 - 2026-10-22
+
+### Fixed
+
+- Fill a PDF Form and Add Text/Images to PDF: field and annotation `text` values are now always sent to the API as strings. When an n8n expression resolved to a number (for example `{{ $json.zipCode }}` giving `12345`), the node sent a JSON number and the API rejected the request with `400 Text is invalid`. Values such as `0` and `false` are no longer dropped.
+- The same string coercion is applied to the other user-supplied text parameters the API defines as strings: search and replace strings in Search & Replace Text or Delete, the barcode `value` in Barcode Generator, and the search strings in Split PDF and Search in PDF.
+- Search & Replace Text or Delete: `searchStrings` and `replaceStrings` are now kept aligned by index, and an empty replacement is sent as `""` so the match is replaced with nothing. Previously an entry with an empty replacement pushed only its search string, shifting the remaining replacements onto the wrong search strings.
+- Search in PDF and Convert from PDF (image output): the inline results JSON is no longer parsed twice. n8n's HTTP helper already parses the downloaded JSON, so `JSON.parse` failed with `Unexpected end of JSON input` on every inline Search in PDF run.
+
 ## 1.0.15 - 2026-09-09
 
 ### Fixed

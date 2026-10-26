@@ -3,6 +3,7 @@ import type { IExecuteFunctions, IDataObject } from 'n8n-workflow';
 import {
 	pdfcoApiRequestWithJobCheck,
 	sanitizeProfiles,
+	toStringParam,
 	ActionConstants,
 } from '../GenericFunctions';
 
@@ -385,8 +386,8 @@ export async function execute(this: IExecuteFunctions, index: number) {
 	const splitBy = this.getNodeParameter('splitBy', index) as string;
 
 	if (splitBy === 'searchText') {
-		const searchString = this.getNodeParameter('searchString', index) as string;
-		if (searchString) body.searchString = searchString;
+		const searchString = toStringParam(this.getNodeParameter('searchString', index));
+		if (searchString !== undefined) body.searchString = searchString;
 
 		// Advanced Options
 		const advancedOptions = this.getNodeParameter(
@@ -428,8 +429,8 @@ export async function execute(this: IExecuteFunctions, index: number) {
 		if (profiles) body.profiles = profiles;
 	} else if (splitBy === 'barcode') {
 		// Search String
-		const barcodeSearchString = this.getNodeParameter('barcodeSearchString', index) as string;
-		if (barcodeSearchString) body.searchString = barcodeSearchString;
+		const barcodeSearchString = toStringParam(this.getNodeParameter('barcodeSearchString', index));
+		if (barcodeSearchString !== undefined) body.searchString = barcodeSearchString;
 
 		// Advanced Options
 		const advancedOptions = this.getNodeParameter('advancedOptionsBarcode', index) as IDataObject;

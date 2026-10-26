@@ -4,6 +4,7 @@ import type { IExecuteFunctions, IDataObject, JsonObject } from 'n8n-workflow';
 import {
 	pdfcoApiRequestWithJobCheck,
 	sanitizeProfiles,
+	toStringParam,
 	ActionConstants,
 } from '../GenericFunctions';
 
@@ -171,7 +172,8 @@ export const description: INodeProperties[] = [
 
 export async function execute(this: IExecuteFunctions, index: number) {
 	const inputUrl = this.getNodeParameter('url', index) as string;
-	const searchString = this.getNodeParameter('searchString', index) as string;
+	// The API expects a string; coerce numeric expression results.
+	const searchString = toStringParam(this.getNodeParameter('searchString', index));
 	const regexSearch = this.getNodeParameter('regexSearch', index) as boolean;
 	const pages = this.getNodeParameter('pages', index) as string;
 	const advancedOptions = this.getNodeParameter('advancedOptions', index) as IDataObject;
@@ -226,7 +228,9 @@ export async function execute(this: IExecuteFunctions, index: number) {
 				url: responseData.url,
 				json: false,
 			});
-			responseData.body = JSON.parse(response);
+			// n8n's httpRequest helper may already parse a JSON response based on its
+			// content-type even with `json: false`; only parse when a string came back.
+			responseData.body = typeof response === 'string' ? JSON.parse(response) : response;
 		} catch (error) {
 			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}

@@ -3,6 +3,7 @@ import type { IExecuteFunctions, IDataObject } from 'n8n-workflow';
 import {
 	pdfcoApiRequestWithJobCheck,
 	sanitizeProfiles,
+	toStringParam,
 	ActionConstants,
 } from '../GenericFunctions';
 
@@ -290,10 +291,10 @@ export async function execute(this: IExecuteFunctions, index: number) {
 		if (deleteOperationsMetadata && Array.isArray(deleteOperationsMetadata)) {
 			const lstSearchStrings = [] as string[];
 			for (const entry of deleteOperationsMetadata) {
-				// Access each individual field
-				const searchString = entry?.searchString as string;
+				// Access each individual field (coerced to string for the API)
+				const searchString = toStringParam(entry?.searchString);
 
-				if (searchString) {
+				if (searchString !== undefined) {
 					lstSearchStrings.push(searchString);
 				}
 			}
@@ -306,15 +307,14 @@ export async function execute(this: IExecuteFunctions, index: number) {
 			const lstSearchStrings = [] as string[];
 			const lstReplaceStrings = [] as string[];
 			for (const entry of replaceOperationsMetadata) {
-				// Access each individual field
-				const searchString = entry?.searchString as string;
-				const replaceString = entry?.replaceString as string;
+				// Access each individual field (coerced to string for the API)
+				const searchString = toStringParam(entry?.searchString);
+				// An empty replacement is valid: the match is replaced with nothing.
+				const replaceString = toStringParam(entry?.replaceString) ?? '';
 
-				if (searchString) {
+				if (searchString !== undefined) {
 					lstSearchStrings.push(searchString);
-				}
-
-				if (replaceString) {
+					// Pushed together so searchStrings and replaceStrings stay paired by index.
 					lstReplaceStrings.push(replaceString);
 				}
 			}
@@ -323,10 +323,9 @@ export async function execute(this: IExecuteFunctions, index: number) {
 		}
 
 	} else if (operationType === 'replaceWithImage') {
-		const searchStringForReplaceWithImage = this.getNodeParameter(
-			'searchStringForReplaceWithImage',
-			index,
-		) as string;
+		const searchStringForReplaceWithImage = toStringParam(
+			this.getNodeParameter('searchStringForReplaceWithImage', index),
+		);
 		body.searchString = searchStringForReplaceWithImage;
 
 		const replaceImage = this.getNodeParameter('replaceImage', index) as string;
